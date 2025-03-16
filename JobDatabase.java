@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.JobName;
 import java.util.LinkedHashMap;
 
 public class JobDatabase {
@@ -10,7 +11,7 @@ public class JobDatabase {
     }
 
     // this method adds a job role to our database.
-    public void AddJob(JobData jd){
+    public void AddJob(JobData jd) {
         JobHashMap.put(jd.GetJobName(), jd);
         System.out.println("Job added: " + jd.GetJobName());
     }
@@ -43,3 +44,5 @@ public class JobDatabase {
         return true;
     }
 }
+
+//need to create a saving mechanism for this database

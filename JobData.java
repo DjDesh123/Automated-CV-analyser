@@ -1,15 +1,13 @@
-import java.util.Arrays;
-
 public class JobData {
     //initalising fields for the needed data for the database and job role
     private String JobName;
     private String CompanyName;
     private String Location;
     private String Description;
-    private String[] Requirements;
+    private String Requirements;
 
     // a constructer to prevent from having to input each bit of data one by one
-    public JobData(String JobName, String CompanyName, String Location, String Description, String[] Requirements) {
+    public JobData(String JobName, String CompanyName, String Location, String Description, String Requirements) {
       this.JobName= JobName;
       this.CompanyName= CompanyName;
       this.Location= Location;
@@ -33,7 +31,7 @@ public class JobData {
         return Description;
     }
 
-    public String[] getRequirements() {
+    public String getRequirements() {
         return Requirements;
     }
 
@@ -41,6 +39,6 @@ public class JobData {
     // to display the infomation
     public String ToString(){
         return JobName  + " at " + CompanyName+ " in " + Location +
-                "Description" +Description +"\n    Requirements: " + Arrays.toString(Requirements);
+                "Description" +Description +"\n    Requirements: " + Requirements;
     }
 }

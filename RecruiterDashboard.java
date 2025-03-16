@@ -18,7 +18,8 @@ public class RecruiterDashboard {
             // ignores if its upper or lowercase
             if (AddJobChoice.equalsIgnoreCase("Y")) {
                 System.out.print("redirecting.....");
-                AddJob.AddingJob();
+                AddJob JobAdder = new AddJob(jd);
+                JobAdder.AddingJob();
             }
             else{
                 System.out.print("Sending you back to the main menu");
