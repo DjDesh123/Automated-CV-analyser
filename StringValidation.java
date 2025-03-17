@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class StringValidation {
 
-    public static String ValidateString(String Message) {
+    public static String ValidateString(String Prompt) {
         Scanner sc = new Scanner(System.in);
         String ValidInput;
 
         while (true) {
-            System.out.println(Message);
+            System.out.println(Prompt);
             ValidInput = sc.nextLine();
 
             // the regex is basically just making sure that its only Words and numbers
