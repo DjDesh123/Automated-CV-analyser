@@ -13,7 +13,7 @@ public class DatabaseStorage {
     // Saves the user database to a file
     // we have LinkedHashMap inside the parameters to access all the data not the actual database
     public static void SaveDatabase(LinkedHashMap<String, UserInfo> userCredentialMap) {
-        System.out.println("🔹 Attempting to save database...");
+        System.out.println("Attempting to save database...");
 
         //uses try and catch to prevent the program from just crahsing if it gOES WRONG
         // this is used to try to open a file to save data

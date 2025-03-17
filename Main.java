@@ -11,9 +11,9 @@ public class Main {
         MenuSchedular ms = new MenuSchedular(sc);
 
         // Check if database file exists
-        File databaseFile = new File("SavedDatabase.dat");
-        if (databaseFile.exists()) {
-            System.out.println("Database file exists at: " + databaseFile.getAbsolutePath());
+        File DatabaseFile = new File("SavedDatabase.dat");
+        if (DatabaseFile.exists()) {
+            System.out.println("Database file exists at: " + DatabaseFile.getAbsolutePath());
         } else {
             System.out.println("Database file does NOT exist. Creating a new one.");
         }
