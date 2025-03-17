@@ -1,11 +1,13 @@
 import java.util.Scanner;
 public class AddJob {
-    private JobDatabase jdb; // ✅ Instance variable for the database
+    private JobDatabase jdb; // Instance variable for the database
 
-    // ✅ Constructor to pass the existing JobDatabase instance
+    // onstructor to pass the existing JobDatabase instance
     public AddJob(JobDatabase jdb) {
         this.jdb = jdb;
     }
+
+    // need to add methods to make the code cleaner and easier to understand
     public void AddingJob() {
         Scanner sc = new Scanner(System.in);
 

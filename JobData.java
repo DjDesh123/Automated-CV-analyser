@@ -15,6 +15,7 @@ public class JobData {
       this.Requirements= Requirements;
     }
 
+    // getter functions
     public String GetJobName() {
         return JobName;
     }
