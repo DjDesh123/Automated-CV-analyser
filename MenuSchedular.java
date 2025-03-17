@@ -35,9 +35,11 @@ public class MenuSchedular{
         // this is a switch case for either entering the logIn Page or the SignUP Page or if a mistake is made to clear screen and loop back
         switch (UserChoice) {
             case 1:
+                // goes to the sign in class
                 LogInPage.LogIn(sc,db );
                 break;
             case 2:
+                // goes to the sign up class
                 SignUpPage.SignUp(sc,db);
                 break;
 
