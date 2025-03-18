@@ -1,13 +1,15 @@
+import java.util.List;
+
 public class JobData {
     //initalising fields for the needed data for the database and job role
     private String JobName;
     private String CompanyName;
     private String Location;
     private String Description;
-    private String Requirements;
+    private List<String> Requirements;
 
     // a constructer to prevent from having to input each bit of data one by one
-    public JobData(String JobName, String CompanyName, String Location, String Description, String Requirements) {
+    public JobData(String JobName, String CompanyName, String Location, String Description, List<String> Requirements) {
       this.JobName= JobName;
       this.CompanyName= CompanyName;
       this.Location= Location;
@@ -28,12 +30,18 @@ public class JobData {
         return Location;
     }
 
-    public String getDescription() {
+    public String GetDescription() {
         return Description;
     }
 
-    public String getRequirements() {
+    public List<String> GetRequirements() {
         return Requirements;
+    }
+
+
+    // i want to turn it back into a string for easier handling later
+    public String GetRequirementsAsString() {
+        return String.join(", ", Requirements);
     }
 
 
