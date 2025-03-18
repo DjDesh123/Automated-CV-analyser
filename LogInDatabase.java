@@ -1,9 +1,6 @@
 // decided to do LinkedhashMaps Because it allows me to be able to see what comes in and what order and keeps a level of organisation whilst sacrificing a little response time
 // make this more deshawn code than ai so change things and also add notes to really understand whats going on
-import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
-import java.security.MessageDigest;
-import java.util.Base64;
 
 // a class that will deal with the log in Linked Hashmap
 public class LogInDatabase {
@@ -17,6 +14,10 @@ public class LogInDatabase {
         UserCredentialMap = DatabaseStorage.LoadDatabase();
     }
 
+    // a getter so i can get it and check the username before allowing the user to enter their password
+    public LinkedHashMap<String, UserInfo> GetUserCredentialMap() {
+        return UserCredentialMap;
+    }
     // Saves the database to file
     public void SaveDatabase() {
         DatabaseStorage.SaveDatabase(UserCredentialMap);
@@ -45,16 +46,14 @@ public class LogInDatabase {
 
 // add job needs to have all the details in and then i can just store it straight into the database
 
+    public Boolean CheckIfFileExists() {
+       if (UserCredentialMap.isEmpty()) {
+           return true;
 
-
-
-
-
-
-
-
-
-
+       }else {
+           return false;
+       }
+    }
 
 
 
