@@ -1,23 +1,9 @@
-import java.io.File;
 import java.util.Scanner;
 
-
-// ideally tidy up the log in page and instead of trying to store an invalid option we will stop it there with a certain command
 public class Main {
     public static void main(String[] args) {
-        //loaded my database in first
         Scanner sc = new Scanner(System.in);
-        LogInDatabase db = new LogInDatabase();
         MenuSchedular ms = new MenuSchedular(sc);
-
-        // Check if database file exists
-        //this should be in the databse file because its taking space
-        File DatabaseFile = new File("SavedDatabase.dat");
-        if (DatabaseFile.exists()) {
-            System.out.println("Database file exists at: " + DatabaseFile.getAbsolutePath());
-        } else {
-            System.out.println("Database file does NOT exist. Creating a new one.");
-        }
 
 
 
@@ -29,13 +15,10 @@ public class Main {
 
 }
 
-//make the data from the hashtable to read and also export in a file so it won't just erase each time.
-//make add job requirements an array because thats a lot better to deal with and make a loop so i can loop how many requirements they want to add
+
+
 // could write a for loop by just asking the user how many entries they want to add
-// add a third option to end the program
-//make an int validation checker so it will constantly check if the user entered a correct integer then the do while will check if its in range
-// the file handling should be in the LogInDatabse not in main its better to encapsulate here
-//save the database before ending
+
 
 
 /*
