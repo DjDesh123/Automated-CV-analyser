@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class RecruiterDashboard {
-    public static void ShowRecruiterDashboard(String Username) {
+    public static void ShowRecruiterDashboard() {
         // greets the user
         System.out.print("Welcome to the Recruiter Dashboard");
         JobDatabase jd = new JobDatabase();
