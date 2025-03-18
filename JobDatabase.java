@@ -35,7 +35,6 @@ public class JobDatabase {
     // this will show all the job in the beginning in the program
     public boolean ShowAllJobs(){
         if (JobHashMap.isEmpty()){
-            System.out.println("No jobs found");
             return false;
         }
         else {
