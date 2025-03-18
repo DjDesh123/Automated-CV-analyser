@@ -2,27 +2,39 @@ import java.util.Scanner;
 
 public class LogInPage {
     public static void LogIn(Scanner sc, LogInDatabase db) {
-
+        ScreenManager.ClearScreen();
 
         boolean LogInSuccess;
+
+        // if the file just been made and is empty then it will send you to the sign up page
+
+        if(db.CheckIfFileExists()){
+            System.out.println("There are no user saved in the database.\n Redirecting to Sign up page....");
+            SignUpPage.SignUp(sc, db);
+        }
+
+        // greets the user
+        System.out.println("Welcome to the CV analyzer");
+
         do {
-            // greets the user
-            System.out.println("Welcome to the CV analyzer");
+            // informs the user that it is Cap Sensitive
             System.out.println("WARNING: Passwords and username are cap sensitive");
 
             //asks for the username
-            System.out.print("Please enter your username:");
-            String Username = sc.nextLine();
+            String Username =StringValidation.ValidateString("Please enter your username:");
+
+            if (!db.GetUserCredentialMap().containsKey(Username)){
+                System.out.println("Username not found");
+                System.out.println("Try again or try a different username: ");
+            }
+
 
             //asks for the password
-            System.out.print("Please enter your password:");
-            String Password = sc.nextLine();
+            String Password = StringValidation.ValidateString("Please enter your password:");
 
 
             //compare with the linked list database to see if present
             LogInSuccess = db.CheckUserCredentials(Username,Password);
-
-
 
 
             if (LogInSuccess) {
@@ -40,5 +52,4 @@ public class LogInPage {
 
 
 
- // next step is to send this to the special pages for recruiter and or applicants via the saved data
-//maybe can use one of the main 4 pillars of oop to create this.
+
