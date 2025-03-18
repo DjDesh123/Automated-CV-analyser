@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 public class AddJob {
     private JobDatabase jdb; // Instance variable for the database
 
@@ -11,7 +10,7 @@ public class AddJob {
 
     // need to add methods to make the code cleaner and easier to understand
     public void AddingJob() {
-        Scanner sc = new Scanner(System.in);
+        JobDatabase jdb = new JobDatabase();
 
 
         System.out.println("Welcome to the adding jobs page ");
@@ -53,6 +52,9 @@ public class AddJob {
 
         JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements);
         jdb.AddJob(NewJob);
+
+        System.out.println("Redirecting back to dashboard.....");
+        RecruiterDashboard.ShowRecruiterDashboard();
 
         // the plan is for this file to simply get the data needed put it in the database and edge case it and make it neat
         //im liking try catch with the error messages so i want to keep implementing them as it makes debugging a lot easier
