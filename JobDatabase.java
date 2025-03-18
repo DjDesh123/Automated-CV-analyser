@@ -10,10 +10,15 @@ public class JobDatabase {
         JobHashMap = new LinkedHashMap<>();
     }
 
+    public void SaveDatabase() {
+        JobDatabaseStorage.SaveJobDatabase(JobHashMap);
+    }
+
     // this method adds a job role to our database.
     public void AddJob(JobData jd) {
         JobHashMap.put(jd.GetJobName(), jd);
         System.out.println("Job added: " + jd.GetJobName());
+        SaveDatabase();
     }
 
     // this method is to delete a job off our database
