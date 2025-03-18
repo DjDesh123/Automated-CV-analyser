@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class LogInPage {
     public static void LogIn(Scanner sc, LogInDatabase db) {
         ScreenManager.ClearScreen();
-
+        JobDatabase jdb = new JobDatabase();
         boolean LogInSuccess;
 
         // if the file just been made and is empty then it will send you to the sign up page
 
-        if(db.CheckIfFileExists()){
+        if(db.GetUserCredentialMap().isEmpty()){
             System.out.println("There are no user saved in the database.\n Redirecting to Sign up page....");
             SignUpPage.SignUp(sc, db);
         }
