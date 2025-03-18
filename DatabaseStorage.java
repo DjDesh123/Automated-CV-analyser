@@ -1,4 +1,4 @@
-
+// this is a bad practice to import the entire library
 import java.io.*;
 import java.util.LinkedHashMap;
 
@@ -15,18 +15,18 @@ public class DatabaseStorage {
     public static void SaveDatabase(LinkedHashMap<String, UserInfo> userCredentialMap) {
         System.out.println("Attempting to save database...");
 
-        //uses try and catch to prevent the program from just crahsing if it gOES WRONG
+        //uses try and catch to prevent the program from just crashing if it goes wrong
         // this is used to try to open a file to save data
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(DATABASE_FILE_NAME))) {
 
             // Serializes and writes LinkedHashMap to file
             out.writeObject(userCredentialMap);
 
-            //displays a message to say if it was sucessful
+            //displays a message to say if it was successful
             System.out.println("Database saved successfully at: " + new File(DATABASE_FILE_NAME).getAbsolutePath());
         } catch (IOException e) {
             // if it was not successful then gives a message
-            //e.getMessage basically just says directly whats the issue than just saying "there was an issue"
+            //e.getMessage basically just says directly what's the issue than just saying "there was an issue"
             System.err.println("Error saving database: " + e.getMessage());
         }
     }
@@ -36,7 +36,7 @@ public class DatabaseStorage {
         // to inform that we are trying to laod the database
         System.out.println("Attempting to load database...");
 
-        // trys to open the file and tries to wread the file
+        // trys to open the file and tries to read the file
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(DATABASE_FILE_NAME))) {
             //in.readObject(); reads the file however it doesnt know what object its reading bc its only reading bytes so
             //(LinkedHashMap<String, UserInfo>) in.readObject(); with this we manually tell it that its a linkedhashmap with whats inside
