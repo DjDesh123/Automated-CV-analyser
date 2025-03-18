@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class LogInPage {
     public static void LogIn(Scanner sc, LogInDatabase db) {
         ScreenManager.ClearScreen();
-        JobDatabase jdb = new JobDatabase();
         boolean LogInSuccess;
 
         // if the file just been made and is empty then it will send you to the sign up page
