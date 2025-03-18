@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 public class AddJob {
     private JobDatabase jdb; // Instance variable for the database
@@ -15,24 +17,38 @@ public class AddJob {
         System.out.println("Welcome to the adding jobs page ");
 
         //JobName
-        System.out.println("Please enter the name of the job you would like to add: ");
-        String JobName = sc.nextLine();
+        String JobName =StringValidation.ValidateString("Please enter the name of the job you would like to add: ");
+
         //CompanyName
-        System.out.println("Please enter the company name of the job you would like to add: ");
-        String CompanyName = sc.nextLine();
+        String CompanyName = StringValidation.ValidateString("Please enter the company name of the job you would like to add: ");
+
 
         //Location
-        System.out.println("Please enter the location of the job you would like to add: ");
-        String Location = sc.nextLine();
+        String Location = StringValidation.ValidateString("Please enter the location of the job you would like to add: ");
+
 
         //Description
-        System.out.println("Please enter the description of the job you would like to add: ");
-        String Description = sc.nextLine();
+        String Description=StringValidation.ValidateString("Please enter the description of the job you would like to add: ");
+
 
         //Requirements
         // need to make this an array function to get it in the database
-        System.out.println("Please enter the job requirements of the job you would like to add: ");
-        String Requirements = sc.nextLine();
+        //Using the List<String> interface allows more flexibility to change the implementation
+        List<String> Requirements = new ArrayList<>();
+
+        while (true){
+            String RequirementsInput =StringValidation.ValidateString("Enter job requirements. Type 'done' when finished:");
+
+
+
+            // stops looping when done is written
+            if (RequirementsInput.equalsIgnoreCase("done")){
+                break;
+            }
+
+            // appends to requirements
+            Requirements.add(RequirementsInput);
+        }
 
 
         JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements);
