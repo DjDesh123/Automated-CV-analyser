@@ -14,13 +14,13 @@ public class MenuSchedular{
     //displays the main menu and asks the user to enter their choice
     public void DisplayMenu() {
         while (true) {
-            ClearScreen.clearScreen();
+            ScreenManager.ClearScreen();
             System.out.println("\nWelcome to the Automated CV Analyzer!");
             System.out.println("1. Log in");
             System.out.println("2. Sign up");
             System.out.println("3. Exit");
 
-            // uses the Intvalidation then i can deal with if the user inputs something that isnt an int
+            // uses the Invalidation then i can deal with if the user inputs something that isnt an int
             int UserChoice = IntValidation.ValidateInt("Enter your choice (1 or 3): ");
 
 
