@@ -30,14 +30,6 @@ public class LogInDatabase {
         String Salt = ph.GetSalt();
         String HashedPassword = ph.HashingPassword(Password,Salt);
 
-        // Print to verify hashing and salting
-        System.out.println("Username: " + Username);
-        System.out.println("Original Password: " + Password);
-        System.out.println("Salt: " + Salt);
-        System.out.println("Hashed Password: " + HashedPassword);
-        System.out.println("----------------------");
-
-
         // puts the data on the linked hashmap
         UserCredentialMap.put(Username, new UserInfo(HashedPassword,AccountType,Salt));
         SaveDatabase();
@@ -73,12 +65,6 @@ public class LogInDatabase {
         // Hash input password using stored salt
         PasswordHashing ph = new PasswordHashing();
         String HashedInput = ph.HashingPassword(Password, StoredSalt);
-
-        // Debugging prints
-        System.out.println("\n[Login Attempt] Username: " + Username);
-        System.out.println("Stored Hashed Password: " + StoredHashedPassword);
-        System.out.println("Input Hashed Password: " + HashedInput);
-        System.out.println("Stored Salt: " + StoredSalt);
 
         // Compare stored hash vs the input hash
         if (HashedInput.equals(StoredHashedPassword)) {
