@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class SignUpPage {
 
     public static void SignUp(Scanner sc, LogInDatabase db){
-        System.out.println("Welcome to the sing in page");
+        System.out.println("Welcome to the sing up page");
 
 
         //Displays questions that are needed for the database
