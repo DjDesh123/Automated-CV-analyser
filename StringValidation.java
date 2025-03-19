@@ -11,11 +11,11 @@ public class StringValidation {
             ValidInput = sc.nextLine();
 
             // the regex is basically just making sure that its only Words and numbers
-            if (ValidInput.matches("[a-zA-Z0-9]{3,15}")) {
+            if (ValidInput.matches("[a-zA-Z0-9]{2,15}")) {
                 // This will return the Valid input
                 return ValidInput;
             } else {
-                System.out.println("Invalid input! Please enter only letters (3-15 characters).");
+                System.out.println("Invalid input! Please enter only letters (2-15 characters).");
             }
 
 
