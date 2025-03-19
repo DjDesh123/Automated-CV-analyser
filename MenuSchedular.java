@@ -5,6 +5,11 @@ public class MenuSchedular{
     private Scanner sc;
     private LogInDatabase db;
 
+
+    private static final int LOGIN = 1;
+    private static final int SIGNUP = 2;
+    private static final int  EXIT =3;
+
     // constructer
     public MenuSchedular(Scanner sc) {
         this.sc = sc;
@@ -22,11 +27,12 @@ public class MenuSchedular{
             System.out.println("3. Exit");
 
             // uses the Invalidation then i can deal with if the user inputs something that isnt an int
-            int UserChoice = IntValidation.ValidateInt("Enter your choice (1 or 3): ");
+            int UserChoice = IntValidation.ValidateInt("Enter your choice (1 or 3): ",sc);
 
 
             // If user chooses Exit (3), break loop because it returns false
             if (!HandlesUserChoice(UserChoice)) {
+                System.exit(0);
                 break;
             }
         }
@@ -35,16 +41,16 @@ public class MenuSchedular{
     private boolean HandlesUserChoice(int UserChoice){
         // this is a switch case for either entering the logIn Page or the SignUP Page or if a mistake is made to clear screen and loop back
         switch (UserChoice) {
-            case 1:
+            case LOGIN:
                 // goes to the sign in class
                 LogInPage.LogIn(sc,db );
                 break;
-            case 2:
+            case SIGNUP:
                 // goes to the sign up class
                 SignUpPage.SignUp(sc,db);
                 break;
 
-            case 3:
+            case EXIT:
                 // Quits the program
                 System.out.print("Closing Program.....");
                 return false;
