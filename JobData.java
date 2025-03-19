@@ -1,6 +1,13 @@
+import java.io.Serializable;
 import java.util.List;
 
-public class JobData {
+public class JobData implements Serializable {
+
+    //to help with verison control
+    private static final long SerialVersionUID = 1L;
+
+
+
     //initalising fields for the needed data for the database and job role
     private String JobName;
     private String CompanyName;
