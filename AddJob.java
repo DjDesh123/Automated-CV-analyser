@@ -10,7 +10,7 @@ public class AddJob {
     }
 
     // need to add methods to make the code cleaner and easier to understand
-    public void AddingJob() {
+    public static void AddingJob() {
         JobDatabase jdb = new JobDatabase();
         Scanner sc = new Scanner(System.in);
 
