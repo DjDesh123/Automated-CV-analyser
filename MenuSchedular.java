@@ -6,8 +6,8 @@ public class MenuSchedular{
     private LogInDatabase db;
 
 
-    private static final int LOGIN = 1;
-    private static final int SIGNUP = 2;
+    private static final int LOG_IN = 1;
+    private static final int SIGN_UP = 2;
     private static final int  EXIT =3;
 
     // constructer
@@ -41,11 +41,11 @@ public class MenuSchedular{
     private boolean HandlesUserChoice(int UserChoice){
         // this is a switch case for either entering the logIn Page or the SignUP Page or if a mistake is made to clear screen and loop back
         switch (UserChoice) {
-            case LOGIN:
+            case LOG_IN:
                 // goes to the sign in class
                 LogInPage.LogIn(sc,db );
                 break;
-            case SIGNUP:
+            case SIGN_UP:
                 // goes to the sign up class
                 SignUpPage.SignUp(sc,db);
                 break;
