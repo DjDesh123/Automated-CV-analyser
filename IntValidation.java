@@ -1,22 +1,18 @@
 import java.util.Scanner;
 public class IntValidation {
     // just a simple in checker its just makes the code more reusable and prevents duplication of code
-    public static int ValidateInt(String Prompt) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println(Prompt);
-
+    public static int ValidateInt(String Prompt,Scanner sc ) {
         while (true) {
+            System.out.println(Prompt);
 
-            // in the scenario that an integer is not given
-            if (!sc.hasNextInt()) {
-                System.out.println("Invalid Input: Must be an integer");
+            if (sc.hasNextInt()) {
+                int userInput = sc.nextInt();
+                sc.nextLine(); // Consume the newline character
+                return userInput; // Return the valid integer
+            } else {
+                System.out.println("Invalid Input: Must be an integer.");
+                sc.next(); // Clear the invalid input
             }
-            else{
-                return sc.nextInt();
-            }
-
-
         }
     }
 
