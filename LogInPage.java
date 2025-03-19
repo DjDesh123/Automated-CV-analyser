@@ -20,7 +20,7 @@ public class LogInPage {
             System.out.println("WARNING: Passwords and username are cap sensitive");
 
             //asks for the username
-            String Username =StringValidation.ValidateString("Please enter your username:");
+            String Username = StringValidation.ValidateString("Please enter your username:");
 
             if (!db.GetUserCredentialMap().containsKey(Username)){
                 System.out.println("Username not found");
