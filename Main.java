@@ -15,11 +15,6 @@ public class Main {
 }
 
 
-
-// could write a for loop by just asking the user how many entries they want to add
-
-
-
 /*
 Changes from the Class Diagram:
 
