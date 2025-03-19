@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 public class AddJob {
     private JobDatabase jdb; // Instance variable for the database
 
@@ -11,6 +12,7 @@ public class AddJob {
     // need to add methods to make the code cleaner and easier to understand
     public void AddingJob() {
         JobDatabase jdb = new JobDatabase();
+        Scanner sc = new Scanner(System.in);
 
 
         System.out.println("Welcome to the adding jobs page ");
@@ -27,7 +29,11 @@ public class AddJob {
 
 
         //Description
-        String Description=StringValidation.ValidateString("Please enter the description of the job you would like to add: ");
+        // scratch that change it back to StringValidation and remove the range
+        // does not use the String validation as it has a limit of 2-15 characters long
+        // could extend but then that would also be defeat teh purpose of it in other parts of the program
+        System.out.println("Please enter the description of the job you would like to add: ");
+        String Description = sc.nextLine();
 
 
         //Requirements
