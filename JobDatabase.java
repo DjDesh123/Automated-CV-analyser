@@ -5,9 +5,10 @@ public class JobDatabase {
 
     private LinkedHashMap<String, JobData>  JobHashMap;
 
-    // need to initalise the database
+    // need to initalise the database from the file
     public JobDatabase() {
-        JobHashMap = new LinkedHashMap<>();
+        JobHashMap=JobDatabaseStorage.LoadJobDatabase();
+        System.out.println("Job Database Loaded");
     }
 
     public void SaveDatabase() {
@@ -35,6 +36,7 @@ public class JobDatabase {
     // this will show all the job in the beginning in the program
     public boolean ShowAllJobs(){
         if (JobHashMap.isEmpty()){
+            System.out.println(JobHashMap.size());
             return false;
         }
         else {
