@@ -1,167 +1,134 @@
-import javax.print.attribute.standard.JobName;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Scanner;
-// I want to add more notes and just tidy this class up a little its a bit sloppy
+import java.util.*;
+
 public class JobDatabase {
+    private final LinkedHashMap<String, JobData> JobHashMap;
 
-    private LinkedHashMap<String, JobData>  JobHashMap;
-
-    // need to initalise the database from the file
+    // Initialize the database from the file
     public JobDatabase() {
-        JobHashMap=JobDatabaseStorage.LoadJobDatabase();
+        JobHashMap = JobDatabaseStorage.LoadJobDatabase();
         System.out.println("Job Database Loaded");
     }
 
+    // Save database to file
     public void SaveDatabase() {
         JobDatabaseStorage.SaveJobDatabase(JobHashMap);
     }
 
-    // this method adds a job role to our database.
-    public void AddJob() {
+    // Adds a job role to the database
+    public void AddJob(Scanner sc) {
+        System.out.println("Welcome to the job addition page");
 
+        // JobName
+        String JobName = StringValidation.ValidateString("Please enter the job name: ", sc);
 
-        JobDatabase jdb = new JobDatabase();
-        Scanner sc = new Scanner(System.in);
+        // CompanyName
+        String CompanyName = StringValidation.ValidateString("Please enter the company name: ", sc);
 
+        // Location
+        String Location = StringValidation.ValidateString("Please enter the job location: ", sc);
 
-        System.out.println("Welcome to the adding jobs page ");
-
-        //JobName
-        String JobName =StringValidation.ValidateString("Please enter the name of the job you would like to add: ");
-
-        //CompanyName
-        String CompanyName = StringValidation.ValidateString("Please enter the company name of the job you would like to add: ");
-
-
-        //Location
-        String Location = StringValidation.ValidateString("Please enter the location of the job you would like to add: ");
-
-
-        //Description
-        // scratch that change it back to StringValidation and remove the range
-        // does not use the String validation as it has a limit of 2-15 characters long
-        // could extend but then that would also be defeat teh purpose of it in other parts of the program
-        System.out.println("Please enter the description of the job you would like to add: ");
+        // Description
+        System.out.println("Please enter the job description: ");
         String Description = sc.nextLine();
 
-
-        //Requirements
-        // need to make this an array function to get it in the database
-        //Using the List<String> interface allows more flexibility to change the implementation
+        // Requirements (Stored as a List)
         List<String> Requirements = new ArrayList<>();
-
-        while (true){
-            String RequirementsInput =StringValidation.ValidateString("Enter job requirements. Type 'done' when finished:");
-
-
-
-            // stops looping when done is written
-            if (RequirementsInput.equalsIgnoreCase("done")){
-                break;
-            }
-
-            // appends to requirements
-            Requirements.add(RequirementsInput);
+        while (true) {
+            String Requirement = StringValidation.ValidateString("Enter job requirement (type 'done' to finish):", sc);
+            if (Requirement.equalsIgnoreCase("done")) break;
+            Requirements.add(Requirement);
         }
 
-        // Create a new JobData object
+        // Create and add the new job
         JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements);
-
         JobHashMap.put(JobName, NewJob);
         System.out.println("Job added: " + JobName);
         SaveDatabase();
     }
 
-    // this method is to delete a job off our database
-    public void DeleteJob(){
-        Scanner sc =new Scanner(System.in);
+    // Deletes a job from the database
+    public void DeleteJob(Scanner sc) {
+        String DeletedJobName = StringValidation.ValidateString("Enter the job name to delete:", sc);
 
-        String DeletedJobName=StringValidation.ValidateString("Enter the name of the job you want to delete");
-
-        if (JobHashMap.containsKey(DeletedJobName)){
+        if (JobHashMap.containsKey(DeletedJobName)) {
             JobHashMap.remove(DeletedJobName);
             System.out.println("Job deleted successfully: " + DeletedJobName);
-        }
-        else {
+            SaveDatabase();
+        } else {
             System.out.println("Job not found: " + DeletedJobName);
         }
-        sc.close();
-
     }
-    // this will show all the job in the beginning in the program
-    public boolean ShowAllJobs(){
-        if (JobHashMap.isEmpty()){
-            System.out.println(JobHashMap.size());
+
+    // Displays all jobs in the database
+    public boolean ShowAllJobs() {
+        if (JobHashMap.isEmpty()) {
+            System.out.println("No jobs found.");
             return false;
-        }
-        else {
+        } else {
             System.out.println("\nAll Jobs:");
-            // LOOPS through the databse and displays all job names
             for (JobData jd : JobHashMap.values()) {
-                System.out.println(jd.GetJobName());
+                System.out.println("- " + jd.GetJobName());
             }
         }
-
         return true;
     }
 
-    public void EditJob() {
-        String GetJobName=StringValidation.ValidateString("Enter the name of the job you want to edit");
+    // Edits job details
+    public void EditJob(Scanner sc) {
+        String JobName = StringValidation.ValidateString("Enter the job name to edit:", sc);
 
-        if  (!JobHashMap.containsKey(GetJobName)){
-            System.out.println("Job not found: " + GetJobName);
+        if (!JobHashMap.containsKey(JobName)) {
+            System.out.println("Job not found: " + JobName);
             return;
-
         }
 
-        JobData jd = JobHashMap.get(GetJobName);
+        JobData jd = JobHashMap.get(JobName);
 
         // Display editable options
-        System.out.println("What would you like to edit?");
+        System.out.println("\nWhat would you like to edit?");
         System.out.println("1. Job Title");
-        System.out.println("2. Job Description");
-        System.out.println("3. Salary");
-        System.out.println("4. Requirements");
-        System.out.println("5. Cancel");
+        System.out.println("2. Company Name");
+        System.out.println("3. Location");
+        System.out.println("4. Description");
+        System.out.println("5. Requirements");
+        System.out.println("6. Cancel");
 
-        int choice = IntValidation.ValidateInt("Enter your choice (1-5)");
+        int choice = IntValidation.ValidateInt("Enter your choice (1-6):", sc);
 
         switch (choice) {
-            case 1:
-                String newJobName = StringValidation.ValidateString("Enter the new job name");
-                JobHashMap.remove(jd); // Remove old job
+            case 1: // Edit Job Title
+                String newJobName = StringValidation.ValidateString("Enter the new job title:", sc);
+                JobHashMap.remove(JobName); // Remove old entry
                 jd = new JobData(newJobName, jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), jd.GetRequirements());
-                JobHashMap.put(newJobName, jd); // Reinsert with new key
-                System.out.println("Job name updated successfully.");
+                JobHashMap.put(newJobName, jd); // Insert updated job
+                System.out.println("Job title updated successfully.");
                 break;
 
-            case 2:
-                String newCompanyName = StringValidation.ValidateString("Enter the new company name");
+            case 2: // Edit Company Name
+                String newCompanyName = StringValidation.ValidateString("Enter the new company name:", sc);
                 jd = new JobData(jd.GetJobName(), newCompanyName, jd.GetLocation(), jd.GetDescription(), jd.GetRequirements());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Company name updated successfully.");
                 break;
 
-            case 3:
-                String newLocation = StringValidation.ValidateString("Enter the new job location");
+            case 3: // Edit Location
+                String newLocation = StringValidation.ValidateString("Enter the new job location:", sc);
                 jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), newLocation, jd.GetDescription(), jd.GetRequirements());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Location updated successfully.");
                 break;
 
-            case 4:
-                String newDescription = StringValidation.ValidateString("Enter the new job description");
+            case 4: // Edit Description
+                String newDescription = StringValidation.ValidateString("Enter the new job description:", sc);
                 jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), newDescription, jd.GetRequirements());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Description updated successfully.");
                 break;
 
-            case 5:
+            case 5: // Edit Requirements
                 List<String> newRequirements = new ArrayList<>();
                 while (true) {
-                    String requirement = StringValidation.ValidateString("Enter a requirement (or type 'done' to finish)");
+                    String requirement = StringValidation.ValidateString("Enter a new requirement (or type 'done' to finish):", sc);
                     if (requirement.equalsIgnoreCase("done")) break;
                     newRequirements.add(requirement);
                 }
@@ -178,7 +145,6 @@ public class JobDatabase {
                 System.out.println("Invalid choice.");
                 break;
         }
+        SaveDatabase();
     }
-
 }
-
