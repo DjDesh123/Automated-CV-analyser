@@ -15,13 +15,14 @@ public class Main {
 }
 
 
+
 /*
 Changes from the Class Diagram:
 
 1. Renamed Classes to Make More Sense
    - JobData - Instead of JobPosting, shorter and clearer
    - LogInDatabase - Instead of UserDatabase, makes it clear it's just for login stuff
-   - MenuSchedular - Instead of MainMenu, more accurate name
+   - MenuScheduler - Instead of MainMenu, more accurate name
    - RecruiterDashboard - Added to keep recruiter features separate
 
 2. Changed How Data is Stored
