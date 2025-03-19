@@ -6,7 +6,6 @@ public class Main {
         MenuSchedular ms = new MenuSchedular(sc);
 
 
-
         ms.DisplayMenu();
 
 
