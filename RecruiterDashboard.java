@@ -12,31 +12,23 @@ public class RecruiterDashboard {
         // to check if the user has the any jobs saved in their database
         if (!jd.ShowAllJobs()) {
             System.out.println("No jobs found");
-            System.out.print("Do you want to add a job?(Y/N)");
-            String AddJobChoice =sc.nextLine();
-
-            // ignores if its upper or lowercase
-            if (AddJobChoice.equalsIgnoreCase("Y")) {
-                System.out.print("redirecting.....");
-                AddJob JobAdder = new AddJob(jd);
-                JobAdder.AddingJob();
-            }
-            else{
-                System.out.print("Sending you back to the main menu");
-                LogInPage.LogIn(sc,ld);
-
-            }
-
-
-
-        }
-        else{
-            jd.ShowAllJobs();
+            System.out.println("redirecting back to Add job menu .....");
+            AddJob.AddingJob();
         }
 
+        int DashboardChoice = IntValidation.ValidateInt("Do you wish to add, edit or delete job posting (1-3)");
 
-
-
+        // chose a switch statement instead of an if statement to make it neater and as well just want to tidy this code up with some cosntants for easier reading
+        switch (DashboardChoice) {
+            case 1:
+                AddJob.AddingJob();
+                break;
+            case 2:
+                DeleteJob.DeletingJob();
+                break;
+            case 3:
+                EditJob.EditingJob();
+        }
     }
 }
 
