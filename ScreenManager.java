@@ -1,11 +1,12 @@
 // https://www.quora.com/How-do-I-clear-the-console-screen-in-Java is where i got this code do want to make it more origrnal tho
 public class ScreenManager {
 
-    private static String Os;
+    // because you OS isnt gonna change nor do we want it to so its static
+    private static final String Os = System.getProperty("os.name").toLowerCase();;
 
-    // a constructer to test the os runtime.
-    public ScreenManager() {
-        this.Os = System.getProperty("os.name").toLowerCase();
+    // this stops people making objects as its uneeded
+    private ScreenManager() {
+        ;
     }
 
 
