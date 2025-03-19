@@ -9,6 +9,7 @@ public class MenuSchedular{
     public MenuSchedular(Scanner sc) {
         this.sc = sc;
         this.db = new LogInDatabase();
+
     }
 
     //displays the main menu and asks the user to enter their choice
