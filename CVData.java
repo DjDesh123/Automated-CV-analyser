@@ -8,7 +8,7 @@ public class CVData implements Serializable {
     public String CVContent;
 
 
-    public CVData(String Username, String Content) {
+    public CVData(String Username, String CVContent) {
         this.Username = Username;
         this.CVContent = CVContent;
     }
