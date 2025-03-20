@@ -15,7 +15,7 @@ public class JobDatabase {
     }
 
     // Adds a job role to the database
-    public void AddJob(Scanner sc) {
+    public void AddJob(Scanner sc, String Username) {
         System.out.println("Welcome to the job addition page");
 
         // JobName
@@ -38,9 +38,10 @@ public class JobDatabase {
             if (Requirement.equalsIgnoreCase("done")) break;
             Requirements.add(Requirement);
         }
+        String PostedBy = Username;
 
         // Create and add the new job
-        JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements);
+        JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements, PostedBy);
         JobHashMap.put(JobName, NewJob);
         System.out.println("Job added: " + JobName);
         SaveDatabase();
@@ -58,6 +59,50 @@ public class JobDatabase {
             System.out.println("Job not found: " + DeletedJobName);
         }
     }
+
+    public boolean ShowUserJobs(String Username) {
+        boolean Found = false;
+
+        System.out.println("\nJobs posted by " + Username + ":");
+        for (JobData job : JobHashMap.values()) {
+            if (job.GetPostedBy().equals(Username)) { // Check if job is posted by user
+                System.out.println("- " + job.GetJobName());
+                Found = true;
+            }
+        }
+
+        if (!Found) {
+            System.out.println("No jobs found for this user.");
+        }
+        return Found;
+    }
+
+
+    public void MoreDetails(Scanner sc) {
+        String SelecetedJob = StringValidation.ValidateString("Enter the name of the string you want to see more detials of",sc);
+
+
+        if (!JobHashMap.containsKey(SelecetedJob)) {
+            System.out.println("Job not found: " + SelecetedJob);
+            return;
+        }
+
+
+        JobData jd = JobHashMap.get(SelecetedJob);
+
+
+        System.out.println("Job Name: " + jd.GetJobName());
+        System.out.println("Company Name: " + jd.GetCompanyName());
+        System.out.println("Location: " + jd.GetLocation());
+        System.out.println("Description: " + jd.GetDescription());
+        System.out.println("Requirements: " + jd.GetRequirements());
+        System.out.println("PostedBy: " + jd.GetPostedBy());
+
+
+
+
+    }
+
 
     // Displays all jobs in the database
     public boolean ShowAllJobs() {
@@ -99,28 +144,28 @@ public class JobDatabase {
             case 1: // Edit Job Title
                 String newJobName = StringValidation.ValidateString("Enter the new job title:", sc);
                 JobHashMap.remove(JobName); // Remove old entry
-                jd = new JobData(newJobName, jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), jd.GetRequirements());
+                jd = new JobData(newJobName, jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), jd.GetRequirements(), jd.GetPostedBy());
                 JobHashMap.put(newJobName, jd); // Insert updated job
                 System.out.println("Job title updated successfully.");
                 break;
 
             case 2: // Edit Company Name
                 String newCompanyName = StringValidation.ValidateString("Enter the new company name:", sc);
-                jd = new JobData(jd.GetJobName(), newCompanyName, jd.GetLocation(), jd.GetDescription(), jd.GetRequirements());
+                jd = new JobData(jd.GetJobName(), newCompanyName, jd.GetLocation(), jd.GetDescription(), jd.GetRequirements(), jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Company name updated successfully.");
                 break;
 
             case 3: // Edit Location
                 String newLocation = StringValidation.ValidateString("Enter the new job location:", sc);
-                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), newLocation, jd.GetDescription(), jd.GetRequirements());
+                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), newLocation, jd.GetDescription(), jd.GetRequirements(),jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Location updated successfully.");
                 break;
 
             case 4: // Edit Description
                 String newDescription = StringValidation.ValidateString("Enter the new job description:", sc);
-                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), newDescription, jd.GetRequirements());
+                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), newDescription, jd.GetRequirements(),jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Description updated successfully.");
                 break;
@@ -132,7 +177,7 @@ public class JobDatabase {
                     if (requirement.equalsIgnoreCase("done")) break;
                     newRequirements.add(requirement);
                 }
-                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), newRequirements);
+                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), newRequirements,jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
                 System.out.println("Requirements updated successfully.");
                 break;
@@ -146,5 +191,17 @@ public class JobDatabase {
                 break;
         }
         SaveDatabase();
+    }
+
+    public List<String> GetRequirementsFromJob(Scanner sc) {
+        String JobName = StringValidation.ValidateString("Enter the job name:", sc);
+        if (!JobHashMap.containsKey(JobName)) {
+            System.out.println("Job not found: " + JobName);
+        }
+        JobData jd = JobHashMap.get(JobName);
+
+
+        return jd.GetRequirements();
+
     }
 }
