@@ -3,6 +3,8 @@ import java.util.*;
 public class JobDatabase {
     private final LinkedHashMap<String, JobData> JobHashMap;
 
+    // add consts here
+
     // Initialize the database from the file
     public JobDatabase() {
         JobHashMap = JobDatabaseStorage.LoadJobDatabase();
