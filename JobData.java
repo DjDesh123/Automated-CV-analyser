@@ -14,14 +14,16 @@ public class JobData implements Serializable {
     private String Location;
     private String Description;
     private List<String> Requirements;
+    private String PostedBy;
 
     // a constructer to prevent from having to input each bit of data one by one
-    public JobData(String JobName, String CompanyName, String Location, String Description, List<String> Requirements) {
+    public JobData(String JobName, String CompanyName, String Location, String Description, List<String> Requirements, String PostedBy) {
       this.JobName= JobName;
       this.CompanyName= CompanyName;
       this.Location= Location;
       this.Description= Description;
       this.Requirements= Requirements;
+      this.PostedBy = PostedBy;
     }
 
     // getter functions
@@ -45,11 +47,7 @@ public class JobData implements Serializable {
         return Requirements;
     }
 
-
-    // i want to turn it back into a string for easier handling later
-    public String GetRequirementsAsString() {
-        return String.join(", ", Requirements);
-    }
+    public String GetPostedBy() {return PostedBy;}
 
 
     // to display the infomation
