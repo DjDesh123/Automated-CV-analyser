@@ -8,7 +8,7 @@ public class RecruiterDashboard {
     private static final int EXIT = 4;
 
 
-    public static void ShowRecruiterDashboard() {
+    public static void ShowRecruiterDashboard(String Username) {
 
         // greets the user
         System.out.println("Welcome to the Recruiter Dashboard");
@@ -20,9 +20,9 @@ public class RecruiterDashboard {
         while (true) {
             ScreenManager.ClearScreen();
             // to check if the user has the any jobs saved in their database
-            if (!jd.ShowAllJobs()) {
+            if (!jd.ShowUserJobs(Username)) {
                 System.out.println("redirecting back to Add job menu .....");
-                jd.AddJob(sc);
+                jd.AddJob(sc,Username);
             }
 
 
@@ -39,7 +39,7 @@ public class RecruiterDashboard {
             //I want to add a loop to this to make it look a lot better and keeps the flow of the project
             switch (DashboardChoice) {
                 case ADD_JOB:
-                    jd.AddJob(sc);
+                    jd.AddJob(sc,Username);
                     break;
                 case EDIT_JOB:
                     jd.EditJob(sc);
