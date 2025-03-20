@@ -24,14 +24,16 @@ public class CVDatabase {
 
         jdb.ShowAllJobs();
 
+        // this was used to asks user to select a job then i call the GetRequirements to get the requirements
         List<String> Requirements = jdb.GetRequirementsFromJob(sc);
 
         System.out.println("Please enter/paste your CV (press Enter twice to finish):");
 
-
+        // used String Builder to keep it efficent and running quickly without creating uneeded objects
         StringBuilder CVContent = new StringBuilder();
         boolean lastLineEmpty = false;
 
+        // reads line by line of scanner and then if two empty lines was submitted then the loop will end
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             if (line.trim().isEmpty()) {
@@ -45,24 +47,28 @@ public class CVDatabase {
             }
         }
 
+        // fianlly converts the StringBuilder back into a string then calls AnalyseAndMatch to show the the nlp to compare and show the matched requirements
         List<String> Matched = nlp.AnalyzeAndMatch(String.valueOf(CVContent),Requirements);
+        //displays matched requirements
         System.out.println("Matched Requirements: " + Matched);
 
         // Store the CV
         CVData NewCV = new CVData(Username, CVContent.toString().trim());
+        //puts it in the cvhahap
         CVHashMap.put(Username, NewCV);
         System.out.println("CV uploaded successfully!");
 
+        //saves this in the hashmap
         SaveDatabase();
     }
 
     // Display a user's CV (for debugging/testing)
-    public void ShowCV(String userName) {
-        if (CVHashMap.containsKey(userName)) {
-            System.out.println("\n" + userName + "'s CV:");
-            System.out.println(CVHashMap.get(userName).GetCVContent());
+    public void ShowCV(String Username) {
+        if (CVHashMap.containsKey(Username)) {
+            System.out.println("\n" + Username + "'s CV:");
+            System.out.println(CVHashMap.get(Username).GetCVContent());
         } else {
-            System.out.println("No CV found for " + userName);
+            System.out.println("No CV found for " + Username);
         }
     }
 }
