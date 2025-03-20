@@ -12,13 +12,27 @@ public class NLPProcessor {
         this.pipeline = new StanfordCoreNLP(props);
     }
 
-    public void analyzeText(String text) {
-        CoreDocument doc = new CoreDocument(text);
+    public List<String> AnalyzeAndMatch(String CvText, List<String> JobRequirements) {
+        CoreDocument doc = new CoreDocument(CvText);
         pipeline.annotate(doc);
 
-        // Extract Named Entities (Organizations, Locations, People, etc.)
+        // Store extracted words for matching
+        Set<String> ExtractedWords = new HashSet<>();
+
+        // Extract Named Entities (Skills, Organizations, Locations, People, etc.)
         for (CoreEntityMention em : doc.entityMentions()) {
-            System.out.println("Entity: " + em.text() + " -> " + em.entityType());
+            ExtractedWords.add(em.text().toLowerCase()); // Store in lowercase for comparison
         }
+
+        // Compare extracted words with job requirements
+        List<String> MatchedRequirements = new ArrayList<>();
+        for (String Requirement : JobRequirements) {
+            if (ExtractedWords.contains(Requirement.toLowerCase())) {
+                MatchedRequirements.add(Requirement);
+            }
+        }
+
+        return MatchedRequirements; // Return matched requirements
     }
 }
+
