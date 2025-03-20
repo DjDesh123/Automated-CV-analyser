@@ -42,7 +42,7 @@ public class LogInPage {
                 UserInfo User = db.GetUser(Username);
                 String StoredAccountType = User.GetAccountType();
 
-                DashboardRedirector.Redrict(StoredAccountType);
+                DashboardRedirector.Redrict(StoredAccountType,Username);
             } else {
                 System.out.println("Invalid username or password");
             }
