@@ -1,7 +1,9 @@
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class CVDatabase {
+    //initalises the linkedhashmap
     private final LinkedHashMap<String, CVData> CVHashMap;
 
     // Load CV database from file (if exists)
@@ -15,11 +17,19 @@ public class CVDatabase {
         CVDatabaseStorage.SaveCVDatabase(CVHashMap);
     }
 
-    // Upload a CV
-    public void UploadCV(String userName, Scanner sc) {
+    // this will be replaced as we are going to get the actual files and then rip it into this code via a folder or something
+    public void UploadCV(String Username, Scanner sc) {
+        NLPProcessor nlp = new NLPProcessor();
+        JobDatabase  jdb = new JobDatabase();
+
+        jdb.ShowAllJobs();
+
+        List<String> Requirements = jdb.GetRequirementsFromJob(sc);
+
         System.out.println("Please enter/paste your CV (press Enter twice to finish):");
 
-        StringBuilder cvContent = new StringBuilder();
+
+        StringBuilder CVContent = new StringBuilder();
         boolean lastLineEmpty = false;
 
         while (sc.hasNextLine()) {
@@ -31,13 +41,16 @@ public class CVDatabase {
                 lastLineEmpty = true;
             } else {
                 lastLineEmpty = false;
-                cvContent.append(line).append("\n");
+                CVContent.append(line).append("\n");
             }
         }
 
+        List<String> Matched = nlp.AnalyzeAndMatch(String.valueOf(CVContent),Requirements);
+        System.out.println("Matched Requirements: " + Matched);
+
         // Store the CV
-        CVData newCV = new CVData(userName, cvContent.toString().trim());
-        CVHashMap.put(userName, newCV);
+        CVData NewCV = new CVData(Username, CVContent.toString().trim());
+        CVHashMap.put(Username, NewCV);
         System.out.println("CV uploaded successfully!");
 
         SaveDatabase();
