@@ -18,6 +18,7 @@ public class LogInDatabase {
     public LinkedHashMap<String, UserInfo> GetUserCredentialMap() {
         return UserCredentialMap;
     }
+
     // Saves the database to file
     public void SaveDatabase() {
         DatabaseStorage.SaveDatabase(UserCredentialMap);
@@ -35,27 +36,8 @@ public class LogInDatabase {
         SaveDatabase();
     }
 
-
-// add job needs to have all the details in and then i can just store it straight into the database
-
-    public Boolean CheckIfFileExists() {
-       if (UserCredentialMap.isEmpty()) {
-           return true;
-
-       }else {
-           return false;
-       }
-    }
-
-
-
-    // to check if the credentials are valid
-    public boolean CheckUserCredentials(String Username, String Password) {
-        // if we cant find the username in the database we just show an error message
-        if (!UserCredentialMap.containsKey(Username)) {
-            System.out.println("Error: Username not found!");
-            return false;
-        }
+    // to check if the password the user entered is the same as the stored one
+    public boolean CheckPasswordIsValid(String Username, String Password) {
 
         // Retrieve stored user info
         UserInfo User = UserCredentialMap.get(Username);
