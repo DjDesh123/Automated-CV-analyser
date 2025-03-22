@@ -1,27 +1,21 @@
-// What i want this class to do is basically take from my database and then go "oh they say they are an applicant/recuiter then sent to their repsect dashbaords "
+import java.util.Scanner;
+
 public class DashboardRedirector {
 
-    public static void Redrict(String AccountType,String Username ) {
+    public static void Redrict(String Username, Scanner sc,LogInDatabase db) {
 
+        // gets the AccountType of the user
+        UserInfo User = db.GetUser(Username);
+        String AccountType = User.GetAccountType();
+
+        // if the AccountType matches either recruiter or applicant then its redirected tothe corect dashboard
         if (AccountType.equals("Recruiter")) {
             //sends him to the RecruiterDashboard.
-            RecruiterDashboard.ShowRecruiterDashboard(Username);
+            RecruiterDashboard.ShowRecruiterDashboard(Username,sc);
         }
         else if (AccountType.equals("Applicant")) {
             ApplicantDashboard.ShowApplicantDashboard(Username);
         }
-        else{
-            System.out.println("Invalid Account Type");
-        }
-
-
-
-
-
-
-
-
-
 
     }
 
