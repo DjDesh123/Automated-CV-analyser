@@ -5,19 +5,18 @@ public class StringValidation {
     public static String ValidateString(String Prompt,Scanner sc) {
         String ValidInput;
 
-        while (true) {
+        do{
             System.out.println(Prompt);
-            ValidInput = sc.nextLine();
+            ValidInput = sc.nextLine().trim();
 
             // the regex is basically just making sure that its only Words and numbers
-            if (ValidInput.matches("^[A-Za-z0-9 ]+$")) {
-                // This will return the Valid input
-                return ValidInput;
-            } else {
+            if (!ValidInput.matches("^[A-Za-z0-9 ]+$")) {
                 System.out.println("Invalid input! Please do not enter special characters .");
             }
 
 
-        }
+        }while(!ValidInput.matches("^[A-Za-z0-9 ]+$"));
+
+        return ValidInput;
     }
 }
