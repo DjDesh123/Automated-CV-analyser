@@ -7,7 +7,6 @@ public class JobDatabaseStorage {
 
 
     public static void SaveJobDatabase(LinkedHashMap<String, JobData>  JobHashMap) {
-        System.out.println("Attempting to save database...");
 
         //uses try and catch to prevent the program from just crahsing if it goes wrong
         // this is used to try to open a file to save data
@@ -28,9 +27,6 @@ public class JobDatabaseStorage {
 
     //Loads the user database from a file.
     public static LinkedHashMap<String, JobData>  LoadJobDatabase() {
-        // to inform that we are trying to laod the database
-        System.out.println("Attempting to load database...");
-
         // trys to open the file and tries to read the file
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVED_JOB_DATABASE_FILE))) {
             //in short .dat stores by using bytes and we are passing an object so we need to turn it back into an object
