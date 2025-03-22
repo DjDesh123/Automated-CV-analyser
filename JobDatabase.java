@@ -4,11 +4,15 @@ public class JobDatabase {
     private final LinkedHashMap<String, JobData> JobHashMap;
 
     // add consts here
+    private static final int EDIT_JOB_TITLE = 1;
+    private static final int EDIT_COMPANY_NAME = 2;
+    private static final int EDIT_LOCATION = 3;
+    private static final int EDIT_JOB_DESCRIPTION = 4;
+    private static final int EDIT_REQUIREMENTS = 5;
 
     // Initialize the database from the file
     public JobDatabase() {
         JobHashMap = JobDatabaseStorage.LoadJobDatabase();
-        System.out.println("Job Database Loaded");
     }
 
     // Save database to file
@@ -16,31 +20,32 @@ public class JobDatabase {
         JobDatabaseStorage.SaveJobDatabase(JobHashMap);
     }
 
-    // Adds a job role to the database
-    public void AddJob(Scanner sc, String Username) {
+    // Adds a job role to the database by collecting all the needed infomation and putting it into the JobHashMap
+    public void AddJob(Scanner sc, String PostedBy) {
         System.out.println("Welcome to the job addition page");
 
-        // JobName
         String JobName = StringValidation.ValidateString("Please enter the job name: ", sc);
 
-        // CompanyName
+
         String CompanyName = StringValidation.ValidateString("Please enter the company name: ", sc);
 
-        // Location
+
         String Location = StringValidation.ValidateString("Please enter the job location: ", sc);
 
-        // Description
-        System.out.println("Please enter the job description: ");
-        String Description = sc.nextLine();
 
-        // Requirements (Stored as a List)
+        String  Description = StringValidation.ValidateString("Please enter the job description: ", sc);
+
         List<String> Requirements = new ArrayList<>();
-        while (true) {
+
+        // loops and add entires to the list untill the user writes done
+        do{
             String Requirement = StringValidation.ValidateString("Enter job requirement (type 'done' to finish):", sc);
-            if (Requirement.equalsIgnoreCase("done")) break;
-            Requirements.add(Requirement);
-        }
-        String PostedBy = Username;
+
+            if (Requirement.equalsIgnoreCase("done"))
+                Requirements.add(Requirement);
+
+        }while (!Requirements.contains("done"));
+
 
         // Create and add the new job
         JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements, PostedBy);
@@ -79,10 +84,10 @@ public class JobDatabase {
         return Found;
     }
 
-
+    //shows the details of the selected job
     public void MoreDetails(Scanner sc) {
-        String SelecetedJob = StringValidation.ValidateString("Enter the name of the string you want to see more detials of",sc);
 
+        String SelecetedJob = StringValidation.ValidateString("Enter the name of the string you want to see more detials of",sc);
 
         if (!JobHashMap.containsKey(SelecetedJob)) {
             System.out.println("Job not found: " + SelecetedJob);
@@ -143,44 +148,59 @@ public class JobDatabase {
         int choice = IntValidation.ValidateInt("Enter your choice (1-6):", sc);
 
         switch (choice) {
-            case 1: // Edit Job Title
+            case EDIT_JOB_TITLE:
                 String newJobName = StringValidation.ValidateString("Enter the new job title:", sc);
-                JobHashMap.remove(JobName); // Remove old entry
+
+                //removes the old entry
+                JobHashMap.remove(JobName);
+
+                //inserts the updated job back in
                 jd = new JobData(newJobName, jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), jd.GetRequirements(), jd.GetPostedBy());
-                JobHashMap.put(newJobName, jd); // Insert updated job
+                JobHashMap.put(newJobName, jd);
+
+                //Displays a message to tell the user the output
                 System.out.println("Job title updated successfully.");
                 break;
 
-            case 2: // Edit Company Name
+            case EDIT_COMPANY_NAME:
                 String newCompanyName = StringValidation.ValidateString("Enter the new company name:", sc);
+
                 jd = new JobData(jd.GetJobName(), newCompanyName, jd.GetLocation(), jd.GetDescription(), jd.GetRequirements(), jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
+
                 System.out.println("Company name updated successfully.");
                 break;
 
-            case 3: // Edit Location
+            case EDIT_LOCATION:
                 String newLocation = StringValidation.ValidateString("Enter the new job location:", sc);
+
                 jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), newLocation, jd.GetDescription(), jd.GetRequirements(),jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
+
                 System.out.println("Location updated successfully.");
                 break;
 
-            case 4: // Edit Description
+            case EDIT_JOB_DESCRIPTION:
                 String newDescription = StringValidation.ValidateString("Enter the new job description:", sc);
+
                 jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), newDescription, jd.GetRequirements(),jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
+
                 System.out.println("Description updated successfully.");
                 break;
 
-            case 5: // Edit Requirements
-                List<String> newRequirements = new ArrayList<>();
-                while (true) {
-                    String requirement = StringValidation.ValidateString("Enter a new requirement (or type 'done' to finish):", sc);
-                    if (requirement.equalsIgnoreCase("done")) break;
-                    newRequirements.add(requirement);
-                }
-                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), newRequirements,jd.GetPostedBy());
+            case EDIT_REQUIREMENTS:
+                List<String> NewRequirements = new ArrayList<>();
+                String Requirement;
+                do{
+                    Requirement = StringValidation.ValidateString("Enter a new requirement (or type 'done' to finish):", sc);
+                    if (Requirement.equalsIgnoreCase("done")) break;
+                    NewRequirements.add(Requirement);
+                }while(Requirement != "done");
+
+                jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), NewRequirements,jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
+
                 System.out.println("Requirements updated successfully.");
                 break;
 
@@ -195,15 +215,76 @@ public class JobDatabase {
         SaveDatabase();
     }
 
-    public List<String> GetRequirementsFromJob(Scanner sc) {
-        String JobName = StringValidation.ValidateString("Enter the job name:", sc);
-        if (!JobHashMap.containsKey(JobName)) {
-            System.out.println("Job not found: " + JobName);
-        }
+    public List<String> GetRequirementsFromJob(String JobName,Scanner sc) {
+        do{
+            if (!JobHashMap.containsKey(JobName)) {
+                System.out.println("Job not found: " + JobName);
+                return null;
+            }
+
+        }while (!JobHashMap.containsKey(JobName));
+
         JobData jd = JobHashMap.get(JobName);
-
-
         return jd.GetRequirements();
 
     }
+
+    public void CheckJobApplication(String JobName,CVDatabase cvdb) {
+        JobData jd = JobHashMap.get(JobName);
+        NotificationSystem ns = new NotificationSystem();
+
+        if (jd == null) {
+            System.out.println("Job not found: " + JobName);
+            return;
+        }
+
+        String Recruiter =jd.GetPostedBy();
+        Boolean FoundCV = false;
+
+
+
+        for(CVData cv :cvdb.CVHashMap.values()) {
+            if (cv.GetJobName().equals(JobName)) {
+                FoundCV = true;
+                List<String> MatchedRequirements = new ArrayList<>(jd.GetRequirements());
+
+
+                if (cv.GetMatchedRequirements() != null) {
+                    MatchedRequirements.retainAll(cv.GetMatchedRequirements());
+                } else {
+                    MatchedRequirements.clear(); // Ensures it's an empty list if no matches
+                }
+
+
+                System.out.println("Applicant: " + cv.GetUsername());
+                if (MatchedRequirements.isEmpty()) {
+                    System.out.println("You matched none of the requirements.");
+                } else {
+                    System.out.println("Matched Requirements: " + MatchedRequirements);
+                }
+
+
+                ns.NotifyRecruiter(Recruiter, "A new CV was submitted for " + JobName + " by " + cv.GetUsername() +
+                        ". Matched requirements: " + (MatchedRequirements.isEmpty() ? "None" : MatchedRequirements));
+            }
+        }
+
+
+        if (!FoundCV) {
+            System.out.println("no CVs have been submitted fo this job ");
+        }
+
+    }
+
+    public Boolean FindJob(String JobName) {
+
+        if (JobHashMap.containsKey(JobName)) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
 }
