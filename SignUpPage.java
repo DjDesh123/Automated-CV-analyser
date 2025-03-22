@@ -2,36 +2,71 @@ import java.util.Scanner;
 
 public class SignUpPage {
 
+    private static final int RECRUITER =  1;
+    private static final int APPLICANT = 2;
+
     public static void SignUp(Scanner sc, LogInDatabase db){
-        System.out.println("Welcome to the sing up page");
+
+        // initialized the variables for in the loop
+        String Username;
+        int AccountChoice;
+        String AccountType="";
+
+        // to improve user's ui experience
+        ScreenManager.ClearScreen();
+
+        // introduce them into the sign-up page
+        System.out.println("\n\nWelcome to the sing up page\n\n");
 
 
-        //Displays questions that are needed for the database
+        do{
+            //stores the username
+            Username=StringValidation.ValidateString("Please enter a username:",sc);
+
+            // Linked hashmaps don't handle duplicate keys so preventing overwriting someone's account we have this if statement to warn them that the username is already taken
+            if (db.GetUserCredentialMap().containsKey(Username)) {
+                System.out.println("There is already a user with the same username");
+            }
+
+        }while(db.GetUserCredentialMap().containsKey(Username));
 
 
-        System.out.println("Are you a recruiter or are you an applicant? (1 for Recruiter 2 for Applicant)");
-        int AccountChoice = sc.nextInt();
-        sc.nextLine(); // stops the issue of skipping the next input
-
-        System.out.println("Please enter your username:");
-        String Username = sc.nextLine();
-
-        System.out.println("Please enter your password:");
-        String Password = sc.nextLine();
-
-        // shorter way to write if-else statments
-        String AccountType = (AccountChoice == 1) ? "Recruiter" : "Applicant";
+        //stores the password
+        String Password=StringValidation.ValidateString("Please enter a password:",sc);
 
 
+        // loops until the user enters a valid option
+        do{
+            System.out.println("\nAre you a:\n");
+            System.out.print("1- Recruiter ");
+            System.out.print("2- Applicant ");
+
+            AccountChoice=IntValidation.ValidateInt("Enter your choice (1 or 2)",sc);
+
+            switch(AccountChoice) {
+                case RECRUITER:
+                    AccountType = "Recruiter";
+                    break;
+
+                case APPLICANT:
+                    AccountType = "Applicant";
+                    break
+                            ;
+                default:
+                    System.out.println("Invalid choice! Must enter 1 or 2");
+            }
+
+        }while(AccountChoice != RECRUITER || AccountChoice != APPLICANT);
+
+
+        //adds the user's infomation into the database and displays a message after completion
         db.AddEntry(Username,Password,AccountType);
         System.out.println("You have created an a new account with your username: " + Username);
-        System.out.print(db);
 
-        // TEMP to just see if the datbase works the way it was planned
+        //redirects them straight to the LogIn page
+        System.out.println("you will be redriceted to the Login Page");
         LogInPage.LogIn(sc,db);
     }
 
 }
 
-
-// after creating their accounts sending them to the right page
