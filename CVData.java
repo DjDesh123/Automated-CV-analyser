@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 public class CVData implements Serializable {
@@ -12,7 +11,7 @@ public class CVData implements Serializable {
     public List<String> MatchedRequirements;
 
 
-    public CVData(String Username, String CVContent, String JobName, List<String> matched) {
+    public CVData(String Username, String CVContent, String JobName, List<String> MatchedRequirements) {
         this.Username = Username;
         this.CVContent = CVContent;
         this.JobName = JobName;
