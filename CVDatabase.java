@@ -42,7 +42,7 @@ public class CVDatabase {
         System.out.println("Exited the loop. Moving forward...");
 
         // this was used to asks user to select a job then i call the GetRequirements to get the requirements
-        List<String> Requirements = jdb.GetRequirementsFromJob(JobName, sc);
+        List<String> Requirements = jdb.GetRequirementsFromJob(JobName);
 
 
         System.out.println("Please enter/paste your CV (press Enter twice to finish):");
@@ -84,16 +84,10 @@ public class CVDatabase {
 
         //now sends a notifcation to the recruiter when the database is checked later on
         jdb.CheckJobApplication(JobName,cvdb);
+
+
+        ApplicantDashboard.ShowApplicantDashboard(Username,sc);
     }
 
-    // Display a user's CV (for debugging/testing)
-    public void ShowCV(String Username) {
-        if (CVHashMap.containsKey(Username)) {
-            System.out.println("\n" + Username + "'s CV:");
-            System.out.println(CVHashMap.get(Username).GetCVContent());
-        } else {
-            System.out.println("No CV found for " + Username);
-        }
-    }
 }
 
