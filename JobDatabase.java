@@ -52,19 +52,27 @@ public class JobDatabase {
         JobHashMap.put(JobName, NewJob);
         System.out.println("Job added: " + JobName);
         SaveDatabase();
+
+        RecruiterDashboard.ShowRecruiterDashboard(PostedBy,sc);
     }
 
     // Deletes a job from the database
-    public void DeleteJob(Scanner sc) {
-        String DeletedJobName = StringValidation.ValidateString("Enter the job name to delete:", sc);
+    public void DeleteJob(Scanner sc,String Username) {
+        String DeletedJobName;
 
-        if (JobHashMap.containsKey(DeletedJobName)) {
-            JobHashMap.remove(DeletedJobName);
-            System.out.println("Job deleted successfully: " + DeletedJobName);
-            SaveDatabase();
-        } else {
-            System.out.println("Job not found: " + DeletedJobName);
-        }
+        do{
+
+            DeletedJobName = StringValidation.ValidateString("Enter the job name to delete:", sc);
+
+            if (JobHashMap.containsKey(DeletedJobName)) {
+                JobHashMap.remove(DeletedJobName);
+                System.out.println("Job deleted successfully: " + DeletedJobName);
+                SaveDatabase();
+            } else {
+                System.out.println("Job not found: " + DeletedJobName);
+            }
+        }while (JobHashMap.containsKey(DeletedJobName));
+        RecruiterDashboard.ShowRecruiterDashboard(Username,sc);
     }
 
     public boolean ShowUserJobs(String Username) {
@@ -85,10 +93,11 @@ public class JobDatabase {
     }
 
     //shows the details of the selected job
-    public void MoreDetails(Scanner sc) {
+    public void MoreDetails(String Username, Scanner sc) {
 
-        String SelecetedJob = StringValidation.ValidateString("Enter the name of the string you want to see more detials of",sc);
+        String SelecetedJob = StringValidation.ValidateString("Enter the name of the job you want to see more detials of",sc);
 
+        //
         if (!JobHashMap.containsKey(SelecetedJob)) {
             System.out.println("Job not found: " + SelecetedJob);
             return;
@@ -105,7 +114,7 @@ public class JobDatabase {
         System.out.println("Requirements: " + jd.GetRequirements());
         System.out.println("PostedBy: " + jd.GetPostedBy());
 
-
+        ApplicantDashboard.ShowApplicantDashboard(Username,sc);
 
 
     }
@@ -126,7 +135,7 @@ public class JobDatabase {
     }
 
     // Edits job details
-    public void EditJob(Scanner sc) {
+    public void EditJob(Scanner sc,String Username) {
         String JobName = StringValidation.ValidateString("Enter the job name to edit:", sc);
 
         if (!JobHashMap.containsKey(JobName)) {
@@ -196,7 +205,7 @@ public class JobDatabase {
                     Requirement = StringValidation.ValidateString("Enter a new requirement (or type 'done' to finish):", sc);
                     if (Requirement.equalsIgnoreCase("done")) break;
                     NewRequirements.add(Requirement);
-                }while(Requirement != "done");
+                }while(!Requirement.equals("done"));
 
                 jd = new JobData(jd.GetJobName(), jd.GetCompanyName(), jd.GetLocation(), jd.GetDescription(), NewRequirements,jd.GetPostedBy());
                 JobHashMap.put(jd.GetJobName(), jd);
@@ -213,9 +222,10 @@ public class JobDatabase {
                 break;
         }
         SaveDatabase();
+        RecruiterDashboard.ShowRecruiterDashboard(Username,sc);
     }
 
-    public List<String> GetRequirementsFromJob(String JobName,Scanner sc) {
+    public List<String> GetRequirementsFromJob(String JobName) {
         do{
             if (!JobHashMap.containsKey(JobName)) {
                 System.out.println("Job not found: " + JobName);
