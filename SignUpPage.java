@@ -37,9 +37,9 @@ public class SignUpPage {
 
         // loops until the user enters a valid option
         do{
-            System.out.println("\nAre you a:\n");
-            System.out.print("1- Recruiter ");
-            System.out.print("2- Applicant ");
+            System.out.println("Are you a:\n");
+            System.out.println("1- Recruiter ");
+            System.out.println("2- Applicant ");
 
             AccountChoice=IntValidation.ValidateInt("Enter your choice (1 or 2)",sc);
 
@@ -56,7 +56,7 @@ public class SignUpPage {
                     System.out.println("Invalid choice! Must enter 1 or 2");
             }
 
-        }while(AccountChoice != RECRUITER || AccountChoice != APPLICANT);
+        }while(AccountChoice < RECRUITER || AccountChoice > APPLICANT);
 
 
         //adds the user's infomation into the database and displays a message after completion
