@@ -16,7 +16,7 @@ public class JobDatabaseStorage {
             out.writeObject(JobHashMap);
 
             //displays a message to say if it was sucessful
-            System.out.println("Database saved successfully at: " + new File(SAVED_JOB_DATABASE_FILE).getAbsolutePath());
+            System.out.println("Database saved successfully");
         } catch (IOException e) {
             // if it was not successful then gives a message
             //e.getMessage basically just says directly what's the issue than just saying "there was an issue"
