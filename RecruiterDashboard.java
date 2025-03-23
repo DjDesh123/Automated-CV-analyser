@@ -53,11 +53,11 @@ public class RecruiterDashboard {
                     break;
 
                 case EDIT_JOB:
-                    jd.EditJob(sc);
+                    jd.EditJob(sc,Username);
                     break;
 
                 case DELETE_JOB:
-                    jd.DeleteJob(sc);
+                    jd.DeleteJob(sc,Username);
                     break;
 
                 case EXIT:
@@ -67,6 +67,7 @@ public class RecruiterDashboard {
 
                 default:
                     System.out.println("Invalid choice! Must be an integer from 1 to 4");
+                    ScreenManager.ClearScreen();
 
             }
         }while(DashboardChoice < ADD_JOB || DashboardChoice > EXIT);
