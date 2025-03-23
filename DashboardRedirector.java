@@ -8,13 +8,13 @@ public class DashboardRedirector {
         UserInfo User = db.GetUser(Username);
         String AccountType = User.GetAccountType();
 
-        // if the AccountType matches either recruiter or applicant then its redirected tothe corect dashboard
+        // if the AccountType matches either recruiter or applicant then its redirected to the correct dashboard
         if (AccountType.equals("Recruiter")) {
             //sends him to the RecruiterDashboard.
             RecruiterDashboard.ShowRecruiterDashboard(Username,sc);
         }
         else if (AccountType.equals("Applicant")) {
-            ApplicantDashboard.ShowApplicantDashboard(Username);
+            ApplicantDashboard.ShowApplicantDashboard(Username,sc);
         }
 
     }
