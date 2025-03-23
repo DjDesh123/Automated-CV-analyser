@@ -1,5 +1,5 @@
 import edu.stanford.nlp.pipeline.*;
-
+import edu.stanford.nlp.ling.*;
 import java.util.*;
 
 public class NLPProcessor {
@@ -22,30 +22,43 @@ public class NLPProcessor {
     }
 
     public List<String> AnalyzeAndMatch(String CvText, List<String> JobRequirements) {
-        // CoreDocuments with CvText and then uses pipeline to runs the NLP analyse on the text
+        // Creates a CoreDocument with CvText and runs the NLP analysis on the text
         CoreDocument doc = new CoreDocument(CvText);
-        pipeline.annotate(doc);
+        pipeline.annotate(doc); // Ensure fresh analysis each time
 
         // Store extracted words for matching
         Set<String> ExtractedWords = new HashSet<>();
 
         // Extract Named Entities (Skills, Organizations, Locations, People, etc.)
-        // the for loop basicallys says for each entitiy that is menetioned
         for (CoreEntityMention em : doc.entityMentions()) {
-            //Stores the Extracted words and  stores them into a hashset to prevent duplicates
+            // Stores the extracted words in a HashSet to prevent duplicates
             ExtractedWords.add(em.text().toLowerCase());
         }
 
+        // Extract Lemmatized Words to Handle Word Variations
+        for (CoreLabel token : doc.tokens()) {
+            String lemma = token.lemma().toLowerCase();
+            ExtractedWords.add(lemma);
+        }
 
         List<String> MatchedRequirements = new ArrayList<>();
+
         // Compare extracted words with job requirements
         for (String Requirement : JobRequirements) {
-            if (ExtractedWords.contains(Requirement.toLowerCase())) {
-                MatchedRequirements.add(Requirement);
+            String lowerReq = Requirement.toLowerCase();
+
+            for (String word : ExtractedWords) {
+                // STRICT MATCH ONLY to prevent false positives
+                if (word.equals(lowerReq)) {
+                    MatchedRequirements.add(Requirement);
+                    break;
+                }
             }
         }
 
-        // Return matched requirements
+        // Debugging Output: Show Matched Requirements
+        System.out.println("Matched Job Requirements: " + MatchedRequirements);
+
         return MatchedRequirements;
     }
 }
