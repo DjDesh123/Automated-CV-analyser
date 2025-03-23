@@ -16,7 +16,7 @@ public class CVDatabaseStorage {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             return (LinkedHashMap<String, CVData>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            return new LinkedHashMap<>(); // Return empty database if file doesn't exist
+            return new LinkedHashMap<>();
         }
     }
 }
