@@ -22,6 +22,7 @@ public class ApplicantDashboard {
         int MenuChoice;
 
         do {
+            System.out.println("\n\nOptions: ");
             System.out.println("1. Post your cv");
             System.out.println("2. More details");
             System.out.println("3. Exit");
