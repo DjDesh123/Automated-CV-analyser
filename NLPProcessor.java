@@ -1,6 +1,8 @@
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.ling.*;
 import java.util.*;
+import org.apache.commons.text.similarity.LevenshteinDistance;
+
 
 public class NLPProcessor {
     private StanfordCoreNLP pipeline;
@@ -11,13 +13,13 @@ public class NLPProcessor {
         /*
             -tokenize - breaks text into words
             -ssplit - splits up sentences
-            -pos - tags parts of speechs like nouns verbs etc etc
-            -lemma - converts words to their base form (like running to run or skipping to skip to make the easier for the nlp)
-            -ner - Named Enitiy Recongition (NER) - detects names places skills etc etc
-            -parse - Analyse sentences structure
-
+            -pos - tags parts of speech like nouns, verbs, etc.
+            -lemma - converts words to their base form (like running to run or skipping to skip to make it easier for NLP)
+            -ner - Named Entity Recognition (NER) - detects names, places, skills, etc.
+            -parse - Analyzes sentence structure
+            -depparse - Dependency parsing to understand sentence structure better
         */
-        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse");
+        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,depparse");
         this.pipeline = new StanfordCoreNLP(props);
     }
 
@@ -42,15 +44,20 @@ public class NLPProcessor {
         }
 
         List<String> MatchedRequirements = new ArrayList<>();
+        LevenshteinDistance ld = new LevenshteinDistance();
 
         // Compare extracted words with job requirements
         for (String Requirement : JobRequirements) {
-            String lowerReq = Requirement.toLowerCase();
+            String LowerReq = Requirement.toLowerCase();
 
-            for (String word : ExtractedWords) {
-                // STRICT MATCH ONLY to prevent false positives
-                if (word.equals(lowerReq)) {
+            for (String Word : ExtractedWords) {
+                // Calculate Levenshtein Distance
+                int Distance = ld.apply(Word, LowerReq);
+
+                // Allow a small difference
+                if (Distance <= 2) {
                     MatchedRequirements.add(Requirement);
+                    // Stop checking if a match is found to avoid duplicates
                     break;
                 }
             }
@@ -63,3 +70,8 @@ public class NLPProcessor {
     }
 }
 
+
+
+/*
+i have used and downloaded the Stanford nlp and using a LevenshteinDistance.
+ */
