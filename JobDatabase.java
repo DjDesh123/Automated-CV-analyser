@@ -166,18 +166,6 @@ public class JobDatabase {
         RecruiterDashboard.ShowRecruiterDashboard(Username, sc);
     }
 
-    public Boolean FindJob(String JobName) {
-        for (JobData job : JobHashMap.values()) {
-            if (job.GetJobName().equalsIgnoreCase(JobName)) {
-                // Job found
-                return true;
-            }
-        }
-        // Job not found
-        return false;
-
-    }
-
     public List<String> GetRequirementsFromJob(String JobId) {
         JobData jd = JobHashMap.get(JobId);
         return jd.GetRequirements();
