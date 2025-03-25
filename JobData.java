@@ -15,15 +15,17 @@ public class JobData implements Serializable {
     private String Description;
     private List<String> Requirements;
     private String PostedBy;
+    private String JobID;
 
     // a constructer to prevent from having to input each bit of data one by one
-    public JobData(String JobName, String CompanyName, String Location, String Description, List<String> Requirements, String PostedBy) {
+    public JobData(String JobName, String CompanyName, String Location, String Description, List<String> Requirements, String PostedBy,String JobID) {
       this.JobName= JobName;
       this.CompanyName= CompanyName;
       this.Location= Location;
       this.Description= Description;
       this.Requirements= Requirements;
       this.PostedBy = PostedBy;
+      this.JobID= JobID;
     }
 
     // getter functions
@@ -49,10 +51,8 @@ public class JobData implements Serializable {
 
     public String GetPostedBy() {return PostedBy;}
 
+    public String GetJobID() {return JobID;}
 
-    // to display the infomation
-    public String ToString(){
-        return JobName  + " at " + CompanyName+ " in " + Location +
-                "Description" +Description +"\n    Requirements: " + Requirements;
-    }
+
+
 }

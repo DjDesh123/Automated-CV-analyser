@@ -1,8 +1,5 @@
 import javax.print.attribute.standard.JobName;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CVDatabase {
     //initalises the linkedhashmap
@@ -27,24 +24,45 @@ public class CVDatabase {
 
         boolean FoundJob;
         String JobName;
+        String SelectedJobId = "";
 
-        // loops till its correct
+        // this is to first see if the job is in the database
+
+        // Loop until a valid job name is entered
         do {
-            // shows all the avaliable jobs
-            jdb.ShowAllJobs();
+            jdb.ShowAllJobs();  // Display available jobs
+            JobName = StringValidation.ValidateString("Enter the name of the job you wish to submit your CV to:", sc);
 
-            // gets the job name
-            JobName = StringValidation.ValidateString("Enter the name of the job you wish to submit your cv to:", sc);
+            FoundJob = false;  // Reset FoundJob to false for each iteration
 
-            FoundJob = jdb.FindJob(JobName);
-        } while (!FoundJob);
+            // Check if job exists by name
+            for (JobData job : jdb.GetJobs()) {
+                if (job.GetJobName().equalsIgnoreCase(JobName)) {
+                    FoundJob = true;  // Mark job as found
+                    break;  // Stop once the job is found
+                }
+            }
 
-        System.out.println("Exited the loop. Moving forward...");
+            if (!FoundJob) {
+                System.out.println("Job not found. Please try again.");
+            }
 
-        // this was used to asks user to select a job then i call the GetRequirements to get the requirements
-        List<String> Requirements = jdb.GetRequirementsFromJob(JobName);
+        } while (!FoundJob); // Repeat if job is not found
+
+        // now we know the job exist then we need to get the job key
 
 
+        // Now we know the job exists. Let's get the job key (ID)
+        for (JobData job : jdb.GetJobs()) {
+            if (job.GetJobName().equalsIgnoreCase(JobName)) {
+                // Store the Job ID (key)
+                SelectedJobId = job.GetJobID();  // Assuming JobData has a GetJobId() method
+                break;
+            }
+        }
+
+        List<String> Requirements = jdb.GetRequirementsFromJob(SelectedJobId);
+        
         System.out.println("Please enter/paste your CV (press Enter twice to finish):");
 
         // used String Builder to keep it efficent and running quickly without creating uneeded objects
