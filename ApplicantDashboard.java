@@ -26,6 +26,7 @@ public class ApplicantDashboard {
             System.out.println("1. Post your cv");
             System.out.println("2. More details");
             System.out.println("3. Exit");
+
             // allows the user to navigate the options
             MenuChoice = IntValidation.ValidateInt("Enter your choice (1-3)", sc);
 
