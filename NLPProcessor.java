@@ -1,77 +1,81 @@
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.ling.*;
-import java.util.*;
+import edu.stanford.nlp.util.*;
 import org.apache.commons.text.similarity.LevenshteinDistance;
+import java.util.*;
 
+
+// ADD DEEP COMMENTING AND ALSO TAKE SOME NOTES ABOUT NLP AND THE SOLUTION TO THE ISSUE PRIOR WOULD BE USEFUL FOR LATER CODE
 
 public class NLPProcessor {
     private StanfordCoreNLP pipeline;
 
     public NLPProcessor() {
-        // Load the NLP pipeline with English models
+        // Initialize the Stanford NLP pipeline
         Properties props = new Properties();
-        /*
-            -tokenize - breaks text into words
-            -ssplit - splits up sentences
-            -pos - tags parts of speech like nouns, verbs, etc.
-            -lemma - converts words to their base form (like running to run or skipping to skip to make it easier for NLP)
-            -ner - Named Entity Recognition (NER) - detects names, places, skills, etc.
-            -parse - Analyzes sentence structure
-            -depparse - Dependency parsing to understand sentence structure better
-        */
-        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,depparse");
+        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner");
         this.pipeline = new StanfordCoreNLP(props);
     }
 
     public List<String> AnalyzeAndMatch(String CvText, List<String> JobRequirements) {
-        // Creates a CoreDocument with CvText and runs the NLP analysis on the text
+        // Create a CoreDocument with the CV text
         CoreDocument doc = new CoreDocument(CvText);
-        pipeline.annotate(doc); // Ensure fresh analysis each time
+        pipeline.annotate(doc);  // Analyze the text
 
-        // Store extracted words for matching
+        // Set to store extracted words and noun phrases
         Set<String> ExtractedWords = new HashSet<>();
+        Set<String> ExtractedPhrases = new HashSet<>();
 
-        // Extract Named Entities (Skills, Organizations, Locations, People, etc.)
-        for (CoreEntityMention em : doc.entityMentions()) {
-            // Stores the extracted words in a HashSet to prevent duplicates
-            ExtractedWords.add(em.text().toLowerCase());
-        }
-
-        // Extract Lemmatized Words to Handle Word Variations
+        // Extract tokens (words) from the CV
         for (CoreLabel token : doc.tokens()) {
-            String lemma = token.lemma().toLowerCase();
-            ExtractedWords.add(lemma);
+            ExtractedWords.add(token.word().toLowerCase());
         }
 
-        List<String> MatchedRequirements = new ArrayList<>();
-        LevenshteinDistance ld = new LevenshteinDistance();
-
-        // Compare extracted words with job requirements
-        for (String Requirement : JobRequirements) {
-            String LowerReq = Requirement.toLowerCase();
-
-            for (String Word : ExtractedWords) {
-                // Calculate Levenshtein Distance
-                int Distance = ld.apply(Word, LowerReq);
-
-                // Allow a small difference
-                if (Distance <= 2) {
-                    MatchedRequirements.add(Requirement);
-                    // Stop checking if a match is found to avoid duplicates
-                    break;
+        // Extract noun phrases from the CV using dependency parsing
+        for (CoreSentence sentence : doc.sentences()) {
+            for (CoreLabel token : sentence.tokens()) {
+                // Capture sequences of noun phrases (simplified for now)
+                if (token.tag().startsWith("NN")) {
+                    ExtractedPhrases.add(token.word().toLowerCase());
                 }
             }
         }
 
-        // Debugging Output: Show Matched Requirements
-        System.out.println("Matched Job Requirements: " + MatchedRequirements);
+        // Debugging output
+        System.out.println("Extracted Noun Phrases: " + ExtractedPhrases);
+        System.out.println("Extracted Words: " + ExtractedWords);
 
+        // Matching job requirements with phrases first
+        List<String> MatchedRequirements = new ArrayList<>();
+        LevenshteinDistance ld = new LevenshteinDistance();
+
+        // Compare noun phrases first
+        for (String Requirement : JobRequirements) {
+            String LowerReq = Requirement.toLowerCase();
+            for (String Phrase : ExtractedPhrases) {
+                if (LowerReq.contains(Phrase)) {
+                    MatchedRequirements.add(Requirement);
+                    break;  // Stop checking if a match is found
+                }
+            }
+        }
+
+        // If no matches are found in the phrases, compare individual words
+        if (MatchedRequirements.isEmpty()) {
+            for (String Requirement : JobRequirements) {
+                String LowerReq = Requirement.toLowerCase();
+                for (String Word : ExtractedWords) {
+                    int Distance = ld.apply(Word, LowerReq);
+                    if (Distance <= 2) {
+                        MatchedRequirements.add(Requirement);
+                        break;  // Stop checking if a match is found
+                    }
+                }
+            }
+        }
+
+        // Debugging output
+        System.out.println("Matched Job Requirements: " + MatchedRequirements);
         return MatchedRequirements;
     }
 }
-
-
-
-/*
-i have used and downloaded the Stanford nlp and using a LevenshteinDistance.
- */
