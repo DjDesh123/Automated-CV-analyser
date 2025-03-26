@@ -14,7 +14,7 @@ public class Main {
 
 }
 
-// need to fix all the parameters so then all the loading database and the saving notifcations wont alsways pop up
+
 
 
 

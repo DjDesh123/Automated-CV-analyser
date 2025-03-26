@@ -49,14 +49,12 @@ public class CVDatabase {
 
         } while (!FoundJob); // Repeat if job is not found
 
-        // now we know the job exist then we need to get the job key
-
 
         // Now we know the job exists. Let's get the job key (ID)
         for (JobData job : jdb.GetJobs()) {
             if (job.GetJobName().equalsIgnoreCase(JobName)) {
                 // Store the Job ID (key)
-                SelectedJobId = job.GetJobID();  // Assuming JobData has a GetJobId() method
+                SelectedJobId = job.GetJobID();
                 break;
             }
         }
