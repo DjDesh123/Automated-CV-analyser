@@ -236,6 +236,7 @@ public class JobDatabase {
         ApplicantDashboard.ShowApplicantDashboard(Username, sc);
     }
 
+    //FIX THE ERROR HERE
     public void CheckJobApplication(String JobName,CVDatabase cvdb) {
         JobData jd = JobHashMap.get(JobName);
         NotificationSystem ns = new NotificationSystem();
@@ -246,11 +247,9 @@ public class JobDatabase {
         }
 
         String Recruiter =jd.GetPostedBy();
-        Boolean FoundCV = false;
 
         for(CVData cv :cvdb.CVHashMap.values()) {
             if (cv.GetJobName().equals(JobName)) {
-                FoundCV = true;
                 List<String> MatchedRequirements = new ArrayList<>(jd.GetRequirements());
                 if (cv.GetMatchedRequirements() != null) {
                     MatchedRequirements.retainAll(cv.GetMatchedRequirements());
