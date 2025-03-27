@@ -6,7 +6,8 @@ public class RecruiterDashboard {
     private static final int ADD_JOB = 1;
     private static final int EDIT_JOB = 2;
     private static final int DELETE_JOB = 3;
-    private static final int EXIT = 4;
+    private static final int VIEW_CV = 4;
+    private static final int EXIT = 5;
 
 
     public static void ShowRecruiterDashboard(String Username,Scanner sc ) {
@@ -40,7 +41,8 @@ public class RecruiterDashboard {
             System.out.println("1. Add a job");
             System.out.println("2. Edit a job");
             System.out.println("3. Delete a job");
-            System.out.println("4. Exit to main menu");
+            System.out.println("4. View CV");
+            System.out.println("5. Exit to main menu");
 
             DashboardChoice = IntValidation.ValidateInt("Enter your choice (1-4)", sc);
 
@@ -58,6 +60,10 @@ public class RecruiterDashboard {
 
                 case DELETE_JOB:
                     jd.DeleteJob(sc,Username);
+                    break;
+
+                case VIEW_CV:
+                    jd.DisplayApplicantsCV(Username, sc);
                     break;
 
                 case EXIT:

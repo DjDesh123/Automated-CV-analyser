@@ -236,9 +236,20 @@ public class JobDatabase {
         ApplicantDashboard.ShowApplicantDashboard(Username, sc);
     }
 
-    //FIX THE ERROR HERE
     public void CheckJobApplication(String JobName,CVDatabase cvdb) {
-        JobData jd = JobHashMap.get(JobName);
+        String JobId = "";
+
+        // Iterate through the job database to find the matching job
+        for (Map.Entry<String, JobData> entry : JobHashMap.entrySet()) {
+            JobData job = entry.getValue();
+            if (job.GetJobName().equalsIgnoreCase(JobName)) { // Compare with JobName
+                // Store the Job ID
+                JobId = entry.getKey();
+                break;
+            }
+        }
+
+        JobData jd = JobHashMap.get(JobId);
         NotificationSystem ns = new NotificationSystem();
 
         if (jd == null) {
@@ -246,15 +257,16 @@ public class JobDatabase {
             return;
         }
 
-        String Recruiter =jd.GetPostedBy();
+        String Recruiter = jd.GetPostedBy();
 
-        for(CVData cv :cvdb.CVHashMap.values()) {
+        for (CVData cv : cvdb.CVHashMap.values()) {
             if (cv.GetJobName().equals(JobName)) {
                 List<String> MatchedRequirements = new ArrayList<>(jd.GetRequirements());
                 if (cv.GetMatchedRequirements() != null) {
                     MatchedRequirements.retainAll(cv.GetMatchedRequirements());
                 } else {
-                    MatchedRequirements.clear(); // Ensures it's an empty list if no matches
+                    // Ensures it's an empty list if no matches
+                    MatchedRequirements.clear();
                 }
 
 
@@ -270,5 +282,74 @@ public class JobDatabase {
                         ". Matched requirements: " + (MatchedRequirements.isEmpty() ? "None" : MatchedRequirements));
             }
         }
+    }
+
+    public void DisplayApplicantsCV(String Username, Scanner sc) {
+
+        CVDatabase cvdb = new CVDatabase();
+        JobDatabase jdb = new JobDatabase();
+
+
+        String JobId = "";
+        boolean FoundCV = false;
+        String JobName;
+
+
+        do{
+            JobName=StringValidation.ValidateString("Please enter the job name you wish to see all applicants who applied their CV to:", sc);
+
+            // Iterate through the job database to find the matching job
+            for (Map.Entry<String, JobData> entry : JobHashMap.entrySet()) {
+                JobData job = entry.getValue();
+                if (job.GetJobName().equalsIgnoreCase(JobName) && job.GetPostedBy().equals(Username)) {
+                    // Store the Job ID
+                    JobId = entry.getKey();
+                    break;
+                }
+            }
+
+
+            // Put them back in the loop
+            if (JobId == null) {
+                System.out.println("Job not found: " + JobName);
+            }
+
+        }while(JobId.isEmpty());
+
+        for (CVData cv : cvdb.CVHashMap.values()) {
+            // Ensure the CV is for the correct job and is posted by the recruiter of the job
+            if (cv.GetJobName().equalsIgnoreCase(JobName) && cv.GetPostedBy().equalsIgnoreCase(Username)) {
+
+                List<String> MatchedRequirements = cv.GetMatchedRequirements();
+                List<String> JobRequirements = jdb.GetRequirementsFromJob(JobId);
+
+
+                //edge casing
+                if (JobRequirements.isEmpty() || JobRequirements == null) {
+                    System.out.println("ERROR: getting job requirements" + JobName);
+                    return;
+                }
+
+                float Rating = CVRating.CvRateCalculations(MatchedRequirements, JobRequirements);
+
+                // Display the applicant's CV details and rating
+                System.out.println("Applicant: " + cv.GetUsername());
+                System.out.println("Matched Requirements: " + MatchedRequirements);
+                System.out.println("Rating: " + Rating + "%\n\n");
+
+            }
         }
+
+        // If no matching CVs were found, print a message
+        if (!FoundCV) {
+            System.out.println("No CVs uploaded for this job yet.");
+            RecruiterDashboard.ShowRecruiterDashboard(Username, sc);
+        }
+
+
+        RecruiterDashboard.ShowRecruiterDashboard(Username, sc);
+
+
+    }
+
 }

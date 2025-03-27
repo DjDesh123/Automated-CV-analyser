@@ -16,7 +16,6 @@ public class CVDatabase {
         CVDatabaseStorage.SaveCVDatabase(CVHashMap);
     }
 
-    // this will be replaced as we are going to get the actual files and then rip it into this code via a folder or something
     public void UploadCV(String Username, Scanner sc) {
         NLPProcessor nlp = new NLPProcessor();
         JobDatabase jdb = new JobDatabase();
@@ -25,6 +24,7 @@ public class CVDatabase {
         boolean FoundJob;
         String JobName;
         String SelectedJobId = "";
+        String PostedBy = "";
 
         // this is to first see if the job is in the database
 
@@ -55,6 +55,7 @@ public class CVDatabase {
             if (job.GetJobName().equalsIgnoreCase(JobName)) {
                 // Store the Job ID (key)
                 SelectedJobId = job.GetJobID();
+                PostedBy = job.GetPostedBy();
                 break;
             }
         }
@@ -87,8 +88,11 @@ public class CVDatabase {
         //displays matched requirements
         System.out.println("Matched Requirements: " + Matched);
 
+        float Rating = CVRating.CvRateCalculations(Matched,Requirements);
+        System.out.println("Your Rating: " + Rating + "%");
+
         // Store the CV
-        CVData NewCV = new CVData(Username, CVContent.toString().trim(),JobName,Matched);
+        CVData NewCV = new CVData(Username, CVContent.toString().trim(),JobName,Matched,PostedBy,Rating);
 
         //puts it in the cvhashmap
         CVHashMap.put(Username, NewCV);
@@ -96,7 +100,6 @@ public class CVDatabase {
 
         //saves this in the hashmap
         SaveDatabase();
-
 
         //now sends a notifcation to the recruiter when the database is checked later on
         jdb.CheckJobApplication(JobName,cvdb);
