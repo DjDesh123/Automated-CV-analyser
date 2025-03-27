@@ -92,7 +92,7 @@ public class CVDatabase {
         System.out.println("Your Rating: " + Rating + "%");
 
         // Store the CV
-        CVData NewCV = new CVData(Username, CVContent.toString().trim(),JobName,Matched,PostedBy,Rating);
+        CVData NewCV = new CVData(Username,JobName,Matched,PostedBy,Rating);
 
         //puts it in the cvhashmap
         CVHashMap.put(Username, NewCV);
