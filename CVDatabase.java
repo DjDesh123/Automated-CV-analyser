@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.JobName;
 import java.util.*;
 
 public class CVDatabase {
@@ -16,6 +15,7 @@ public class CVDatabase {
         CVDatabaseStorage.SaveCVDatabase(CVHashMap);
     }
 
+    // uploads the cv
     public void UploadCV(String Username, Scanner sc) {
         NLPProcessor nlp = new NLPProcessor();
         JobDatabase jdb = new JobDatabase();
@@ -26,28 +26,31 @@ public class CVDatabase {
         String SelectedJobId = "";
         String PostedBy = "";
 
-        // this is to first see if the job is in the database
+
 
         // Loop until a valid job name is entered
         do {
             jdb.ShowAllJobs();  // Display available jobs
             JobName = StringValidation.ValidateString("Enter the name of the job you wish to submit your CV to:", sc);
 
-            FoundJob = false;  // Reset FoundJob to false for each iteration
+            // Reset FoundJob to false for each iteration
+            FoundJob = false;
 
             // Check if job exists by name
             for (JobData job : jdb.GetJobs()) {
                 if (job.GetJobName().equalsIgnoreCase(JobName)) {
-                    FoundJob = true;  // Mark job as found
-                    break;  // Stop once the job is found
+                    // Mark job as found
+                    FoundJob = true;
+                    // Stop once the job is found
+                    break;
                 }
             }
 
             if (!FoundJob) {
                 System.out.println("Job not found. Please try again.");
             }
-
-        } while (!FoundJob); // Repeat if job is not found
+            // Repeat if job is not found
+        } while (!FoundJob);
 
 
         // Now we know the job exists. Let's get the job key (ID)
@@ -104,7 +107,7 @@ public class CVDatabase {
         //now sends a notifcation to the recruiter when the database is checked later on
         jdb.CheckJobApplication(JobName,cvdb);
 
-
+        // returns to the dashboard
         ApplicantDashboard.ShowApplicantDashboard(Username,sc);
     }
 
