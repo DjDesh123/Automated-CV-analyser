@@ -1,4 +1,3 @@
-// https://www.quora.com/How-do-I-clear-the-console-screen-in-Java is where i got this code do want to make it more origrnal tho
 public class ScreenManager {
 
     // because you OS isnt gonna change nor do we want it to so its static

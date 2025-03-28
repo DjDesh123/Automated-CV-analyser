@@ -19,7 +19,7 @@ public class Main {
 
 
 /*
-Changes from the Class Diagram:
+Changes from orignal plan
 
 1. Renamed Classes to Make More Sense
    - JobData - Instead of JobPosting, shorter and clearer
