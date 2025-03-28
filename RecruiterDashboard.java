@@ -44,7 +44,7 @@ public class RecruiterDashboard {
             System.out.println("4. View CV");
             System.out.println("5. Exit to main menu");
 
-            DashboardChoice = IntValidation.ValidateInt("Enter your choice (1-4)", sc);
+            DashboardChoice = IntValidation.ValidateInt("Enter your choice (1-5)", sc);
 
             // chose a switch statement instead of an if statement to make it neater and as well just want to tidy this code up with some cosntants for easier reading
             //I want to add a loop to this to make it look a lot better and keeps the flow of the project
@@ -72,7 +72,7 @@ public class RecruiterDashboard {
                     break;
 
                 default:
-                    System.out.println("Invalid choice! Must be an integer from 1 to 4");
+                    System.out.println("Invalid choice! Must be an integer from 1 to 5");
                     ScreenManager.ClearScreen();
 
             }

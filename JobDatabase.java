@@ -28,14 +28,42 @@ public class JobDatabase {
     // Adds a job role to the database by collecting all the needed information and putting it into the JobHashMap
     public void AddJob(Scanner sc, String PostedBy) {
         System.out.println("Welcome to the job addition page");
+        String OverwriteChoice = "";
+        String JobName;
+        String CompanyName;
+        String JobID;
+        do {
+            JobName = StringValidation.ValidateString("Please enter the job name: ", sc);
+            CompanyName = StringValidation.ValidateString("Please enter the company name: ", sc);
+            JobID = JobName + "_" + CompanyName;
 
-        String JobName = StringValidation.ValidateString("Please enter the job name: ", sc);
-        String CompanyName = StringValidation.ValidateString("Please enter the company name: ", sc);
+            do{
+                if (JobHashMap.containsKey(JobID)) {
+                    OverwriteChoice = StringValidation.ValidateString("Warning: this job already exist to do wish to overwrite it? (y/n)", sc).trim().toLowerCase();
+
+                    if (OverwriteChoice.equals("y")) {
+                        System.out.println("Job will be overwritten");
+                    } else if (OverwriteChoice.equals("n")) {
+                        System.out.println("redirecting to change job name and job company name");
+                    } else {
+                        System.out.println("ERROR: Must be  either 'y' or 'n'");
+                    }
+                }
+                else{
+                    OverwriteChoice = "y";
+                }
+
+            }while(!OverwriteChoice.equals("y") || !OverwriteChoice.equals("n"));
+
+        }while(OverwriteChoice.equals("y"));
+
+
         String Location = StringValidation.ValidateString("Please enter the job location: ", sc);
         String Description = StringValidation.ValidateString("Please enter the job description: ", sc);
 
         List<String> Requirements = new ArrayList<>();
         String Requirement;
+
         do {
             Requirement = StringValidation.ValidateString("Enter job requirement (type 'done' to finish):", sc);
             if (!Requirement.equalsIgnoreCase("done")) {
@@ -43,7 +71,6 @@ public class JobDatabase {
             }
         } while (!Requirement.equalsIgnoreCase("done"));
 
-        String JobID = JobName + "_" + CompanyName;
         JobData NewJob = new JobData(JobName, CompanyName, Location, Description, Requirements, PostedBy, JobID);
         JobHashMap.put(JobID, NewJob);
         System.out.println("Job added: " + JobName);
@@ -53,10 +80,14 @@ public class JobDatabase {
     }
 
     public void DeleteJob(Scanner sc, String Username) {
-        String DeletedJob = StringValidation.ValidateString("Please enter the job name: ", sc);
-        String JobIdToDelete = null; // To store the job ID if found
+        String DeletedJob;
 
-        do {
+        // To store the job ID if found
+        String JobIdToDelete = null;
+
+        do{
+            DeletedJob = StringValidation.ValidateString("Please enter the job name: ", sc);
+
             // Iterate through the job database to find the matching job
             for (Map.Entry<String, JobData> entry : JobHashMap.entrySet()) {
                 JobData job = entry.getValue();
@@ -81,17 +112,27 @@ public class JobDatabase {
     }
 
     public void EditJob(Scanner sc, String Username) {
-        String JobIdToEdit = StringValidation.ValidateString("Please enter the job Name: ", sc);
+        String JobIdToEdit;
+        String JobNameToEdit;
 
-        // Iterate through the job database to find the matching job
-        for (Map.Entry<String, JobData> entry : JobHashMap.entrySet()) {
-            JobData job = entry.getValue();
-            if (job.GetJobName().equalsIgnoreCase(JobIdToEdit) && job.GetPostedBy().equals(Username)) {
-                // Store the Job ID
-                JobIdToEdit = entry.getKey();
-                break;
+        do {
+            JobNameToEdit = StringValidation.ValidateString("Please enter the job Name: ", sc);
+            JobIdToEdit = null; // Reset the JobId for each loop iteration
+
+            // Iterate through the job database to find the matching job
+            for (Map.Entry<String, JobData> entry : JobHashMap.entrySet()) {
+                JobData job = entry.getValue();
+                if (job.GetJobName().equalsIgnoreCase(JobNameToEdit) && job.GetPostedBy().equals(Username)) {
+                    JobIdToEdit = entry.getKey(); // Store the Job ID
+                    break; // Exit loop once a job is found
+                }
             }
-        }
+
+            if (JobIdToEdit == null) {
+                System.out.println("ERROR: Job not found or you do not have permission to edit it.");
+            }
+
+        } while (JobIdToEdit == null);
 
         // shows them the options
         JobData jd = JobHashMap.get(JobIdToEdit);
