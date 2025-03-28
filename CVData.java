@@ -5,14 +5,16 @@ public class CVData implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String Username;
-    public String JobName;
-    public List<String> MatchedRequirements;
-    public String PostedBy;
-    public float Rating;
+    private String CVID;
+    private String Username;
+    private String JobName;
+    private List<String> MatchedRequirements;
+    private String PostedBy;
+    private float Rating;
 
 
-    public CVData(String Username,String JobName, List<String> MatchedRequirements,String PostedBy,float Rating) {
+    public CVData(String CVID,String Username,String JobName, List<String> MatchedRequirements,String PostedBy,float Rating) {
+        this.CVID = CVID;
         this.Username = Username;
         this.JobName = JobName;
         this.MatchedRequirements = MatchedRequirements;
@@ -21,6 +23,8 @@ public class CVData implements Serializable {
     }
 
     // getter
+
+    public String getCVID() {return CVID;}
 
     public String GetJobName() {return JobName;}
 
@@ -31,4 +35,7 @@ public class CVData implements Serializable {
     public List<String> GetMatchedRequirements() {return MatchedRequirements;}
 
     public String GetPostedBy(){return PostedBy;}
+
+    public float GetRating(){return Rating;}
+
 }

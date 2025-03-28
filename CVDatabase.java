@@ -52,6 +52,9 @@ public class CVDatabase {
             // Repeat if job is not found
         } while (!FoundJob);
 
+        // creates the custom key
+        String CVID = Username+"_"+JobName;
+
 
         // Now we know the job exists. Let's get the job key (ID)
         for (JobData job : jdb.GetJobs()) {
@@ -95,7 +98,7 @@ public class CVDatabase {
         System.out.println("Your Rating: " + Rating + "%");
 
         // Store the CV
-        CVData NewCV = new CVData(Username,JobName,Matched,PostedBy,Rating);
+        CVData NewCV = new CVData(CVID,Username,JobName,Matched,PostedBy,Rating);
 
         //puts it in the cvhashmap
         CVHashMap.put(Username, NewCV);
