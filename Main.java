@@ -29,7 +29,7 @@ Changes from original plan
  2. Recruiter
  - changed hashmap to linkedHashMap because of the predictable iteration order as well as the easier to debug and do maintenance on
 - added the user the option to AddJob EditJob and DeleteJob on the same page as the recruiter then direct them to the database as it ties more with the database than JobPosting
-- Theres getters and loops to get the job information and also to find the key via the job name
+- There's getters and loops to get the job information and also to find the key via the job name
 
 3. JobPosting
 - did not seem like it was needed and put the methods in a more logical place
@@ -43,7 +43,7 @@ Changes from original plan
 - do not need a separate database to rank candidates
 
 6. Setting Manager
-- couldn't find a logical way of implementing it as in the report we wanted constant access to the setting button which is more difficult as it would of causes constant switch statements to be created
+- couldn't find a logical way of implementing it as in the report we wanted constant access to the setting button which is more difficult as it would have causes constant switch statements to be created
 - could have been implemented in a gui sense but more difficult in a cli sense
 
 7. Skill Matcher
@@ -73,24 +73,24 @@ Changes from original plan
 
 13. Applicant Helper
 - did not seem needed as this information is already accessed by the database themselves as It's where it stored
-- view job was not needed in the applicant helper but its referenced in the Dashboard of the recruiter
+- view job was not needed in the applicant helper, but it's referenced in the Dashboard of the recruiter
 
 14. CVUploader
-- instead of having a dedicated class that deals with the updating and uploading of the cv i have method that does that for me which also will overwrite previous attempts as the key is the same so it does all feature efficiently whe applying for the same job by the same user whilst not effecting other jobs
-- this means i don't need the method of replaceCV and also UpdateCV which then already changes the report as the report is effected via the data that is inputted
+- instead of having a dedicated class that deals with the updating and uploading of the cv I have method that does that for me which also will overwrite previous attempts as the key is the same so it does all feature efficiently whe applying for the same job by the same user whilst not effecting other jobs
+- this means I don't need the method of replaceCV and also UpdateCV which then already changes the report as the report is effected via the data that is inputted
 
 15. ThreadsManager
-- I thought that this wasnt needed as of currently because it seems more useful to create threads when the NLP is more complex or the database is so large that its needed but as the program databases are fairly simple and can be changed constantly by deleting jobs I thought it was needed as of current
+- I thought that this wasn't needed as of currently because it seems more useful to create threads when the NLP is more complex or the database is so large that its needed but as the program databases are fairly simple and can be changed constantly by deleting jobs I thought it was needed as of current
 
 16. Encryption Manager
-- all my encryption is dealt with in the PasswordHashing class and that all needed encrypted data is dealt there as we was only going to use Salting for the passwords to keep a level of security
+- all my encryption is dealt with in the PasswordHashing class and that all needed encrypted data is dealt there as we are only going to use Salting for the passwords to keep a level of security
 - there's also comparison to handle encryption and decryption so separate methods didn't seem needed
 
 18. JobWorker
 - the jobs are processed via the database being loaded so the processing and the runTasks aren't needed as there's a way to make the database class do it themselves
 
 19. QueueManager
-- this was to store task in multithreading but as i am loading the cv database and job database through calling the class which runs fast enough so there did not see much benefit in threading at this current point of the project.If this project was a lot bigger than I can see a reason to MultiThread
+- this was to store task in multithreading but as I am loading the cv database and job database through calling the class which runs fast enough so there did not see much benefit in threading at this current point of the project.If this project was a lot bigger than I can see a reason to MultiThread
 
 20. Design Choices
 - whilst the classes format has changed and how the code functions itself the program still follows the same design and rough layout that a cli format could follow. all the same functionality is there, and it still works the same way as planned in the presentation .
