@@ -31,8 +31,6 @@ public class JobDatabaseStorage {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVED_JOB_DATABASE_FILE))) {
             //in short .dat stores by using bytes and we are passing an object so we need to turn it back into an object
             LinkedHashMap<String, JobData> LoadedData = (LinkedHashMap<String, JobData>) in.readObject();
-            // A message to display that the database was loaded and also the amount of users using LoadedData.size()
-            System.out.println("Database loaded with " + LoadedData.size() + " jobs");
             //returns LoadData so its back to the program and not just in LoadDatabase
             return LoadedData;
 

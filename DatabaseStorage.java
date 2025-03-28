@@ -42,10 +42,6 @@ public class DatabaseStorage {
              */
 
             LinkedHashMap<String, UserInfo> LoadedData = (LinkedHashMap<String, UserInfo>) in.readObject();
-
-            // A message to display that the database was loaded and also the amount of users using LoadedData.size()
-            System.out.println("Database loaded with " + LoadedData.size() + " users.");
-
             //returns LoadData so its back to the program and not just in LoadDatabase
             return LoadedData;
 

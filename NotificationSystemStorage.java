@@ -19,7 +19,6 @@ public class NotificationSystemStorage {
     public static LinkedHashMap<String, List<String>> LoadNotifications() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             LinkedHashMap<String, List<String>> LoadedData = (LinkedHashMap<String, List<String>>) in.readObject();
-            System.out.println("Notifications loaded successfully. Total recruiters: " + LoadedData.size());
             return LoadedData;
         } catch (FileNotFoundException e) {
             System.out.println("No notification file found. Creating a new one.");
