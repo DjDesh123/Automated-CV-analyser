@@ -25,10 +25,14 @@ git clone https://github.com/DjDesh123/Automated-CV-analyser.git
    https://commons.apache.org/proper/commons-text/download_text.cgi
 
 ### 3. compile the program
+   ~~~bash
    javac main
+~~~
 
 ### 4. run the program
+   ~~~bash
    java Main
+~~~
    
 ### File Breakdown:
 
