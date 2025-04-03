@@ -16,9 +16,9 @@ The **Automated CV Analyzer** is a Java application designed to help recruiters 
 ## Installation:
 
 ### 1. Clone the Repository:
-'''bash
+~~~bash
 git clone https://github.com/DjDesh123/Automated-CV-analyser.git
-'''
+~~~
 ### 2. install stanfordNLP and Apache Commons Text 
    https://nlp.stanford.edu/software/lex-parser.html#Download
 
