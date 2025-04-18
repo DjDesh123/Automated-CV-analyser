@@ -39,7 +39,6 @@ Changes from original plan
 - did not need to clear the database and getAllCandidates is not needed either to be a separate method
 
 5. CandidateRanker
-- ADD TO CODE TO MAKE THE HIGHEST PERCENTAGE THE ONE THAT GOES ON THE TOP AKA MOST MATCHED
 - do not need a separate database to rank candidates
 
 6. Setting Manager
