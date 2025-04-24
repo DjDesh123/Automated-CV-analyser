@@ -15,7 +15,10 @@ public class Main {
 }
 
 
-
+/* download these to run the program (its ran using intelj)
+   https://nlp.stanford.edu/software/lex-parser.html#Download
+   https://commons.apache.org/proper/commons-text/download_text.cgi
+ */
 
 
 /*
