@@ -1,7 +1,7 @@
 # Automated CV Analyzer
 
 ## Description:
-The **Automated CV Analyzer** is a Java application designed to help recruiters and applicants streamline the job application process by automating the review of CVs. It eliminates the risk of human error, such as missing key requirements or failing to identify critical information in CVs. The program allows recruiters to create, edit, delete job listings, and view the applicants who have applied. Applicants can upload their CVs, receive direct feedback about their suitability for a job, and view detailed job listings.
+The **Automated CV Analyzer** is a Java application designed to help recruiters and applicants streamline the job application process by automating the review of CVs. It eliminates the risk of human error, such as missing key requirements or failing to identify critical information in CVs. The program allows recruiters to create, edit, delete job listings, and view the applicants who have applied. Applicants can upload their CVs, receive direct feedback about their suitability for a job, and view detailed job listing.As well as this, the use of stanford nlp adds a better words extraction whilst also using distance to find wirds similar to words in the english dictonary to handke fuzzy words.
 
 ## Features:
 - **Sign Up**: Allows users to create a personal account as either an applicant or a recruiter.
